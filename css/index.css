@@ -1,0 +1,34 @@
+html,
+body {
+    height: 99%;
+    margin: 0 auto;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+#leftcontent {
+    width: 19%;
+    float: left;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+#right {
+    width: 79%;
+
+    min-height: 100%;
+    float: right;
+    padding-bottom: 40px;
+}
+
+#id_footer {
+    height: 40px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
