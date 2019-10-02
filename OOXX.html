@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>井字遊戲-製作</title>
+    <script>
+        var OX = true;
+        function SetPoint(obj) {
+            if (obj.innerText != '_') return;
+            if (OX == true) {
+                obj.innerText = 'O';
+                OX = false;
+            } else {
+                obj.innerText = 'X';
+                OX = true;
+            }
+        }
+        function Gamecheck() {
+            
+        }
+    </script>
+    <style>
+        table.text {
+            table-layout: fixed;
+            width: 300px;
+            height: 300px;
+        }
+
+        tr.text {
+            table-layout: fixed;
+        }
+
+        td.text {
+            table-layout: fixed;
+            font-size: 100px;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="width:40%; margin: 0 auto;">
+        <h1>井字遊戲</h1>
+        <table class="text" border="1">
+            <tbody>
+                <tr class="text">
+                    <td class="text" id='c1' onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c2" onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c3" onclick="SetPoint(this)">_</td>
+                </tr>
+                <tr class="text">
+                    <td class="text" id="c4" onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c5" onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c6" onclick="SetPoint(this)">_</td>
+                </tr>
+                <tr class="text">
+                    <td class="text" id="c7" onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c8" onclick="SetPoint(this)">_</td>
+                    <td class="text" id="c9" onclick="SetPoint(this)">_</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
