@@ -1,14 +1,75 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        html,
+        body {
+            height: 99%;
+            margin: 0 auto;
+        }
+
+        #wrapper {
+            min-height: 100%;
+            position: relative;
+        }
+
+        #leftcontent {
+            width: 19%;
+            float: left;
+            min-height: 100%;
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        #right {
+            width: 79%;
+
+            min-height: 100%;
+            float: right;
+            padding-bottom: 40px;
+        }
+
+        #id_footer {
+            height: 40px;
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <div style="text-align:center;">
-        <p>:D</p>
+    <div id="wrapper">
+        <div id="leftcontent">
+            <dl>
+                <dt>Frond-end</dt>
+                <dd><a href="/first_HTML.html">first_HTML</a></dd>
+                <dd><a href="/blog_Page.html">blog_Page</a></dd>
+                <dd><a href="/image_text.html">image_text</a></dd>
+                <dd><a href="/dl_dt_dd_list.html">dl_dt_dd_list</a></dd>
+                <dd><a href="/messenge.html">messenge</a></dd>
+                <dd><a href="/table.html">table</a></dd>
+                <dd><a href="/OOXX_Sample.html">OOXX_Sample</a></dd>
+                <dd><a href="/class.html">class</a></dd>
+                <dd><a href="/OOXX.html">OOXX</a></dd>
+                <dd><a href="/ext_css.html">ext_css</a></dd>
+                <dd><a href="/selector.html">selector</a></dd>
+                <dd><a href="/CSSLab.html">CSSLab</a></dd>
+                <dd><a href="/shopeegowu_copy.html">shopeegowu_copy</a></dd>
+            </dl>
+        </div>
+        <div id="rightcontent">
+        </div>
+        <footer id="id_footer">
+            MengHan Web
+        </footer>
     </div>
 </body>
+
 </html>

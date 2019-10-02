@@ -1,48 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ext_css</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>課表</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		table {
+			border-collapse: collapse;
+			border: 5px #515152 solid;
+			width: 50%;
+			margin: 0 auto;
+			margin-top: 100px;
+		}
+		th,td {
+			border: 2px #525152 solid;
+			text-align: center;
+			font-size: 20px;
+			line-height: 30px;
+			background: rgb(255, 255, 255);
+		}
+		.t1_header {
+			background: rgb(255, 255, 255);
+			font-weight: bold;
+		}
+		.out {
+			border-top: 60px rgb(255, 255, 255) solid;
+			border-left: 100px #BDBABD solid;
+			position: relative;
+		}
+		b {
+			font-style: normal;
+			position: absolute;
+			top: -60px;
+			left: -60px;
+			width: 50px;
+		}
+		em {
+			font-style: normal;
+			position: absolute;
+			top: -30px;
+			left: -100px;
+			width: 55px;
+		}
+		.t1 {
+			background: #BDBABD;
+		}
+	</style>
 </head>
 
 <body>
-    <table id='table1'>
-        <caption>
-            <h4>表格</h4>
-        </caption>
-        <thead>
-            <tr>
-                <th>a</th>
-                <th>b</th>
-                <th>c</th>
-                <th>d</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>A</td>
-                <td>B</td>
-                <td>c</td>
-                <td>d</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>5</td>
-                <td>7</td>
-                <td>8</td>
-            </tr>
-        </tbody>
-    </table>
+	<table>
+		<tr>
+			<th style="width:80px;">
+				<div class="out">
+					<b>星期</b>
+					<em>節數</em>
+				</div>
+			</th>
+			<td class="t1_header">星期一</td>
+			<td class="t1_header">星期二</td>
+			<td class="t1_header">星期三</td>
+			<td class="t1_header">星期四</td>
+			<td class="t1_header">星期五</td>
+		</tr>
+		<tr>
+			<td class="t1">早上</td>
+			<td>上課</td>
+			<td rowspan="2">研習</td>
+			<td>上課</td>
+			<td>上課</td>
+			<td rowspan="2">研習</td>
+		</tr>
+		<tr>
+			<td class="t1">下午</td>
+			<td>上課</td>
+			<td>上課</td>
+			<td>上課</td>
+		</tr>
+	</table>
 </body>
 
 </html>
