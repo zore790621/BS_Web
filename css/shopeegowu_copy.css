@@ -1,107 +1,26 @@
 html, body {
-    height: 99%;
+    height: 99.9%;
     margin: 0 auto;
 }
 
-div#sitebody {
-    width: 100%;
-    margin: 0 auto;
-}
-
-div#header {
-    height: 30px;
-    color: rgba(255, 255, 255, 0.705);
-    margin: 0 auto;
-    line-height: 30px;
-    background-color: rgb(240, 56, 0);
-}
-
-i {
-    color: white;
-}
-
-div #select {
+#header {
+    height: 20px;
     background-color: orangered;
-    width: 100%;
-    height: 150px;
-}
-
-div #select span {
-    font-size: 40px;
     color: whitesmoke;
+}
+
+#select {
+    height: 150px;
+    background-color: rgb(255, 94, 0);
+    color: whitesmoke;
+}
+
+#select span {
     position: relative;
-    top: 30px;
-    left: 150px;
+    top: 40px;
+    left: 200px;
+    font-size: 40px;
 }
-
-div #select span input {
-    height: 30px;
-    width: 250px;
-    font-size: 20px;
-}
-
-div#content_1 {
-    height: 350px;
-    background-color: rgb(235, 235, 235);
-    text-align: center;
-    line-height: 350px;
-    margin: 0 auto;
-}
-
-div #content_left {
-    float: left;
-    width: 49.9%;
-}
-
-#content_left img {
-    float: right;
-}
-
-div #content_right {
-    float: left;
-    width: 49.9%;
-}
-
-#content_right img {
-    float: left;
-}
-
-div#content_2 {
-    height: 100px;
-    background-color: rgb(235, 235, 235);
-    line-height: 100px;
-    margin: 0 auto;
-}
-
-#content_2>div {
-    float: left;
-    text-align: center;
-}
-
-#content_2 img {
-    border-radius: 25px;
-}
-
-#content_3 {
-    height: 200px;
-    background-color: rgb(235, 235, 235);
-    text-align: center;
-    line-height: 200px;
-    margin: 0 auto;
-}
-
-#content_3>div {
-    float: left;
-    text-align: center;
-    margin: 0 auto;
-}
-
-
-#footer {
-    text-align: center;
-    height: 40px;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
+/* #select input{
+    
+} */

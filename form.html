@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>form</title>
+</head>
+
+<body>
+    <form id="form1" action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=chenmenghan.build.school@gmail.com&redirect=http://www.google.com" method="POST">
+        <fieldset style="border-radius: 20px">
+            <legend>個人資料 -- <em>必填</em></legend>
+            <div>
+                <label>姓名 :</label>
+                <input type="text" placeholder="請輸入姓名" id="topName" name="topName">
+            </div>
+            <div>
+                <label>密碼 :</label>
+                <input type="password" placeholder="請輸入密碼" id="topPW" name="topPW">
+            </div>
+            <div>
+                <input type="radio" name="sex" id="sex" value="1" checked>男生
+                <input type="radio" name="sex" id="sex" value="2">女生
+            </div>
+        </fieldset>
+        <fieldset style="border-radius: 20px">
+            <legend>個人資料 -- <em>興趣</em></legend>
+            <div>
+                <label>興趣 :</label>
+                <input type="checkbox" name="joys" id="joys" value="1">音樂
+                <input type="checkbox" name="joys" id="joys" value="2">運動
+                <input type="checkbox" name="joys" id="joys" value="3">閱讀
+                <input type="checkbox" name="joys" id="joys" value="4">電影
+            </div>
+            <div>
+                <label style="top: 0;float: left;">專長</label>
+                <textarea rows="3" cols="20" name="joys_text" id="joys_text">1234</textarea>
+            </div>
+        </fieldset>
+        <fieldset style="border-radius: 20px">
+            <legend>個人資料 -- <em>地址</em></legend>
+            <div>
+                <label>郵遞區號 :</label>
+                <input type="text" placeholder="請輸入郵遞區號" id="topDictNum" name="topDictNum">
+            </div>
+            <div>
+                <label>鄉鎮市 :</label>
+                <select>
+                    <option id="dict" name="dict" value="1">台北市</option>
+                    <option id="dict" name="dict" value="2" selected>新北市</option>
+                    <option id="dict" name="dict" value="3">基隆市</option>
+                    <option id="dict" name="dict" value="4">桃園市</option>
+                </select>
+            </div>
+            <div>
+                <label>地址一 :</label>
+                <input type="text" placeholder="請輸入詳細地址" id="address" name="address">
+            </div>
+        </fieldset>
+        <div>
+            <button type="reset">清除</button>
+            <button type="submit">送出</button>
+        </div>
+    </form>
+</body>
+
+</html>
