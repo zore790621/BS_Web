@@ -6,10 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>form</title>
+    <script>
+        //getElementById(抓取頁面上的元素)
+        function getElement(name) {
+            return document.getElementById(name);
+        }
+
+        //判斷是否可以送件
+        function Button_Submit() {
+            //抓取頁面上的checkboc1，取得是否checked
+            var isChecked = getElement('MustCheck').checked;
+            //如果是，就return true
+            if (isChecked) return true;
+            //否則就... 
+            alert('必須勾選同意!');
+            return false;
+        }
+
+        //當網頁載入完成後執行
+        window.onload = function () {
+            //hook event(在form1被submit時...)
+            getElement('form1').onsubmit = function () {
+                //呼叫 Button_Submit()
+                return Button_Submit();
+            };
+        };
+    </script>
 </head>
 
 <body>
-    <form id="form1" action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=chenmenghan.build.school@gmail.com&redirect=http://www.google.com" method="POST">
+    <form id="form1"
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=chenmenghan.build.school@gmail.com&redirect=http://www.google.com"
+        method="POST">
         <fieldset style="border-radius: 20px">
             <legend>個人資料 -- <em>必填</em></legend>
             <div>
@@ -60,8 +88,9 @@
             </div>
         </fieldset>
         <div>
-            <button type="reset">清除</button>
-            <button type="submit">送出</button>
+            <input type="checkbox" name="MustCheck" id="MustCheck"><span>請點選確認送出個資</span><br />
+            <input type="reset" value="清除">
+            <button type="submit" value="送出">送出</button>
         </div>
     </form>
 </body>

@@ -3,24 +3,40 @@ html, body {
     margin: 0 auto;
 }
 
-#header {
+.header {
     height: 20px;
     background-color: orangered;
     color: whitesmoke;
 }
 
-#select {
+.select {
     height: 150px;
     background-color: rgb(255, 94, 0);
     color: whitesmoke;
 }
 
-#select span {
+.select span {
     position: relative;
     top: 40px;
     left: 200px;
     font-size: 40px;
 }
-/* #select input{
-    
-} */
+
+.select input {
+    width: 200px;
+    height: 30px;
+    font-size: 12px;
+}
+.content_1{
+    background-color:darkgray; 
+    position: relative;
+}
+
+
+.footer {
+    height: 40px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
