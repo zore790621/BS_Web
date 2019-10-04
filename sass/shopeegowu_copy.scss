@@ -1,143 +1,136 @@
 @import "_normalize";
 
 %row {
-    display: flex;
+  display: flex;
 }
 
 %column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 %img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 html,
 body {
-    height: 99.9%;
-    margin: 0 auto;
+  height: 99.9%;
+  margin: 0 auto;
 }
 
 .sitebody {
-    width: 100%;
-    background-color: #fdfdfa;
-    margin: 0 auto;
+  width: 100%;
+  background-color: #fdfdfa;
+  margin: 0 auto;
 }
 
 .header {
-    background-color: rgb(255, 81, 0);
-    color: papayawhip;
-    letter-spacing: 2px;
+  background-color: rgb(255, 81, 0);
+  color: papayawhip;
+  letter-spacing: 2px;
 }
 
 .select {
-    height: 100px;
-    background-color: orangered;
-    color: papayawhip;
+  height: 100px;
+  background-color: orangered;
+  color: papayawhip;
 
-    span {
-        position: relative;
-        top: 20px;
-        left: 200px;
-        font-size: 40px;
-    }
+  span {
+    position: relative;
+    top: 20px;
+    left: 200px;
+    font-size: 40px;
+  }
 
-    span input {
-        font-size: 12px;
-        border-radius: 10px;
-    }
+  span input {
+    font-size: 12px;
+    border-radius: 10px;
+  }
 
-    span button {
-        font-size: 10px;
-        border-radius: 10px;
-    }
+  span button {
+    font-size: 10px;
+    border-radius: 10px;
+  }
 }
 
 .content_1 {
-    @extend %row;
-    background-color: darkgray;
-    width: 80%;
-    margin: 10px auto;
+  @extend %row;
+  background-color: darkgray;
+  width: 80%;
+  margin: 10px auto;
 
-    .content_1_left {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        flex-grow: 1;
+  .content_1_left {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-grow: 1;
 
-        img {
-            @extend %img;
-        }
+    img {
+      @extend %img;
     }
+  }
 
-    .content_1_right {
-        padding-top: 2px;
-        padding-bottom: 2px;
-        @extend %column;
-    }
-
-    .div_item {
-        padding-top: 2px;
-        padding-bottom: 2px;
-        flex-grow: 1;
-
-        img {
-            @extend %img;
-        }
-    }
+  .content_1_right {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @extend %column;
+  }
 }
+.div_item {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  flex-grow: 1;
 
+  img {
+    @extend %img;
+  }
+}
 .content_2 {
-    @extend %row;
-    background-color: darkgray;
-    width: 80%;
+  @extend %row;
+  background-color: darkgray;
+  width: 80%;
+  margin: 10px auto;
+
+  .content_2_column {
+    position: relative;
     margin: 0 auto;
-
-    .content_2_column {
-        @extend %column;
-        position: relative;
-        margin: 0 auto;
-
-        .div_item img {
-            @extend %img;
-            border-radius: 50%;
-            position: relative;
-            margin: 0 auto;
-        }
+    .div_item img {
+      border-radius: 50%;
     }
+  }
 }
 
 .content_3 {
-    @extend %row;
-    background-color: darkgray;
-    width: 80%;
-    border: 20px;
-    min-height: 0px;
-    max-height: 100%;
+  @extend %row;
+  background-color: darkgray;
+  width: 80%;
+  border: 20px;
+  min-height: 0px;
+  max-height: 100%;
+  margin: 10px auto;
+
+  .content_3_column {
+    position: relative;
     margin: 0 auto;
+  }
 
-    .content_3_column {
-        @extend %column;
-        position: relative;
-        margin: 0 auto;
-
-        .div_item img {
-            @extend %img;
-        }
-    }
+  .div_item img {
+    @extend %img;
+    position: relative;
+  }
 }
 
 .footer {
-    background-color: black;
-    color: white;
-    position: absolute;
-    margin-top: -50px;
-    margin: 0 auto;
-    height: 50px;
-    bottom: 0px;
-    clear: both;
-    width: 100%;
+  background-color: black;
+  color: white;
+  position: absolute;
+  margin-top: -50px;
+  margin: 0 auto;
+  height: 50px;
+  bottom: 0px;
+  clear: both;
+  width: 100%;
 }

@@ -35,7 +35,7 @@
 </head>
 
 <body>
-    <form id="form1"
+    <form id="form1" name="form1"
         action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=chenmenghan.build.school@gmail.com&redirect=http://www.google.com"
         method="POST">
         <fieldset style="border-radius: 20px">
@@ -90,7 +90,8 @@
         <div>
             <input type="checkbox" name="MustCheck" id="MustCheck"><span>請點選確認送出個資</span><br />
             <input type="reset" value="清除">
-            <button type="submit" value="送出">送出</button>
+            <input type="submit" value="送出">
+            <!-- <button type="submit">送出</button> -->
         </div>
     </form>
 </body>
