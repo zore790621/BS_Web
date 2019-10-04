@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-Hert-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BMI_Simple</title>
+    <script>
+        function getElement(id) {
+            return document.getElementById(id);
+        }
+
+        function result() {
+            var h = (getElement('h').value / 100);
+            var w = getElement('w').value;
+            var result = (w / (h * h));
+            getElement('result').innerText = "BMI 為: " + result;
+        }
+    </script>
+</head>
+
+<body>
+    <div>身高: <input type="text" id="h"></div>
+    <div>體重: <input type="text" id="w"></div>
+    <div>回傳: <label id="result"></label></div>
+    <div><input type="submit" value="計算" onclick="result();"></div>
+</body>
+
+</html>
