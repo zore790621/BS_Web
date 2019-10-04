@@ -374,4 +374,21 @@ header {
   z-index: 50;
   border-bottom: 1px solid #dfdfdf;
 }
+
+.header-menu {
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.header-menu a {
+  display: block;
+  padding: 8px 10px;
+  color: #838383;
+}
+
+.header-menu a:hover {
+  color: #000000;
+}
 /*# sourceMappingURL=RWD_Demo.css.map */
