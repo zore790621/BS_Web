@@ -342,7 +342,7 @@ template {
 }
 
 body {
-  font-family: 'Noto Sans TC', sans-serif;
+  font-family: "Noto Sans TC", sans-serif;
   text-align: center;
 }
 
@@ -466,6 +466,7 @@ nav {
       -ms-flex-direction: column;
           flex-direction: column;
   height: 100%;
+  border: 1px solid #dfdfdf;
 }
 
 .item > div:hover {
@@ -473,25 +474,21 @@ nav {
           box-shadow: 0px 2px 12px 2px #99a6b14a;
 }
 
-.item > div {
-  border: 1px solid #dfdfdf;
-}
-
-.item .item-body {
+.item > div:hover .item-body {
   padding: 1.25rem;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
 }
 
-.item .item-body h4 {
+.item > div:hover .item-body h4 {
   margin: 8px 0px;
   font-size: 18px;
   line-height: 1.2px;
   color: #7d8b9a;
 }
 
-.item .item-footer {
+.item > div:hover .item-footer {
   border-top: 1px solid #dfdfdf;
   padding: 0.75rem 1.25rem;
 }
@@ -538,6 +535,7 @@ nav {
   color: #7d8b9a;
   background-color: #f5f5f5;
   padding: 110px 0px;
+  text-align: center;
 }
 
 .sign-form {
@@ -584,5 +582,70 @@ nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.input-div span {
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-right: -1px;
+}
+
+.input-div input {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
+.page-footer {
+  padding: 48px 0px 20px;
+  background-color: #3d4143;
+  color: #cfcfcf;
+}
+
+.page-footer ul {
+  font-size: 18px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.page-footer a {
+  color: white;
+  display: block;
+  padding: 8px;
+}
+
+.page-footer a:hover {
+  color: #cfcfcf;
+}
+
+.footer-menu {
+  margin-bottom: 20px;
+}
+
+.footer-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 8px;
+}
+
+.footer-logo {
+  text-align: left;
+  font-size: 20px;
+}
+
+.footer-logo a:hover {
+  color: #ffffff;
 }
 /*# sourceMappingURL=RWD_Demo.css.map */
