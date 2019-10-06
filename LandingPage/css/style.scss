@@ -1,0 +1,49 @@
+@import "_normalize";
+@import "_bootsrtap_offset";
+
+body {
+  font-family: "Noto Sans TC", sans-serif;
+  text-align:center;
+}
+
+img {
+  max-width: 100%;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.container {
+  width: 1180px;
+  margin: 0 auto;
+}
+
+.banner {
+  margin: 80px auto;
+  width: 55%;
+}
+
+.content-first {
+  margin: 30px;
+}
+
+.content-sec {
+  margin: 30px;
+}
+.row {
+  margin: 30px;
+}
+
+.content-sec {
+  h4 {
+    margin: 20px 0px;
+  }
+  h6 {
+    margin: 10px 0px;
+  }
+}

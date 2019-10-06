@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-4-navbar.min.css" />
+    <script src="js/bootstrap-4-navbar.min.js"></script>
+    <title>Build_School_Bootstrap</title>
+</head>
+
+<body>
+    <header>
+        <!-- fixed-top justify-content-sm-around頂層 -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top justify-content-sm-around" style="">
+            <a class="navbar-brand" href="#">Logo</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Link 1 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link 2</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item dropdown-toggle" href="#">Submenu</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Submenu action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another submenu action</a></li>
+                                    <li><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action aa</a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action bb</a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item dropdown-toggle" href="#">Submenu 2</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Submenu action 2</a></li>
+                                    <li><a class="dropdown-item" href="#">Another submenu action 2</a></li>
+                                    <li><a class="dropdown-item dropdown-toggle" href="#">Subsubmenu</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action 1 3</a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action 2 3</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item dropdown-toggle" href="#">Second subsubmenu 3</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Subsubmenu action 3 </a></li>
+                                            <li><a class="dropdown-item" href="#">Another subsubmenu action 3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0 ">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-dark my-2 my-sm-0 text-light" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <section class="banner">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://www.w3schools.com/bootstrap4/la.jpg" alt="Los Angeles">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.w3schools.com/bootstrap4/chicago.jpg" alt="Chicago">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.w3schools.com/bootstrap4/ny.jpg" alt="New York">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+
+        </div>
+    </section>
+    <div class="content-first">
+        <div class="container">
+            <H1>我是標題我是標題我是標題</H1>
+        </div>
+        <div class="container">
+            <span class="label">便選取求保當起漸人。
+                紀生不樂，北早通其的無配約處成我，給就後家夠中同藝？家標實如了統有果學列健應大治息後景。
+                以狀時試回點是車總美靈西入真市水留在？的遊就環要單原。
+                清果住本的間車根不，及力國。
+                接低而小習工你舞愛！明高子治其考人言她舉雲事是以能還年然知傳毛。影庭用著己美！
+                且紀為：不參外看：李的展士要卻足友對老然。極國將解麼常目，說國有子滿母流，有如研？到去我定沒當表來有是的。
+                法他工！
+                形中園見對會一作相，算過師該不紙畫愛以球正於清提的響愛養，有起老先：是本日了作看現隊的臉神們大別為……面賽利和？</span>
+        </div>
+    </div>
+    <div class="content-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4">
+                    <div class="row">
+                        <img src="https://i2.kknews.cc/SIG=2tnb8fs/ctp-vzntr/15236206471708sq62popop.jpg"
+                            class="rounded-circle" alt="Celebrity" width="304" height="236">
+                    </div>
+                    <div class="row">
+                        <span>2015年1月1日下午，JJ在西門町電影街簽唱會時，一名佯裝成歌迷的男子突然反排隊簽名的方向衝上台，並揍了JJ一拳。男子欲衝下台時被工作人員制伏，並立刻報警處理。</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <div class="row">
+                        <img src="https://scontent.ftpe3-1.fna.fbcdn.net/v/t1.0-9/26814696_10156999457383976_7472479698393375424_n.jpg?_nc_cat=111&_nc_oc=AQmYELW6CRaQL0AMkR1TCX0SVfq44Vn6PU2M0gwc-8YMx4E6K4qgFtHGnApbeXHQ9gI&_nc_ht=scontent.ftpe3-1.fna&oh=ec45f75315396951ce4e3419fa526dcd&oe=5E3C7A03"
+                            class="rounded-circle" alt="Celebrity" width="304" height="236">
+                    </div>
+                    <div class="row">
+                        <span>2015年1月1日下午，JJ在西門町電影街簽唱會時，一名佯裝成歌迷的男子突然反排隊簽名的方向衝上台，並揍了JJ一拳。男子欲衝下台時被工作人員制伏，並立刻報警處理。</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <div class="row">
+                        <img src="https://res3.pubu.tw/news/2774/73671/T5kUhA_xl.jpg" class="rounded-circle"
+                            alt="Celebrity" width="304" height="236">
+                    </div>
+                    <div class="row">
+                        <span>2015年1月1日下午，JJ在西門町電影街簽唱會時，一名佯裝成歌迷的男子突然反排隊簽名的方向衝上台，並揍了JJ一拳。男子欲衝下台時被工作人員制伏，並立刻報警處理。</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text col-md-5 col-md-offset-left-1">
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                </div>
+                <div class="text col-md-5 col-md-offset-right-1">
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                    <div>
+                        <H2>Navbar With Dropdown</H2>
+                        <h6>The exemple add a dropdown menu in the navbar</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
