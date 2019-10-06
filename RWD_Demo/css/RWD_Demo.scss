@@ -1,5 +1,83 @@
 @import "_normalize";
 
+@media screen and (max-width: 1280px) {
+  .container {
+    max-width: 940px;
+  }
+  .story {
+    width: 95%;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .container {
+    max-width: 830px;
+  }
+  .story-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .story {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 880px) {
+  .container {
+    max-width: 600px;
+  }
+  .items {
+    flex-direction: column;
+  }
+  .item {
+    width: 90%;
+    margin: 10px;
+  }
+  .signup-content {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: 90%;
+  }
+  .header-menu {
+    display: none;
+    position: absolute;
+    background: #ffffff;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    border-bottom: 1px solid #dfdfdf;
+    padding: 8px 0;
+    li {
+      padding: 0px 20px;
+    }
+  }
+  .menu-btn {
+    display: unset;
+  }
+  .banner {
+    padding-top: 80px;
+  }
+  .footer-content {
+    flex-direction: column;
+  }
+  .footer-content ul {
+    margin-top: 20px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .container {
+    width: 100%;
+  }
+  .story-img {
+    margin: 0px auto;
+    width: 90%;
+  }
+  .sign-form {
+    width: 100%;
+  }
+}
+
 body {
   font-family: "Noto Sans TC", sans-serif;
   text-align: center;
@@ -57,6 +135,14 @@ nav {
 .menu {
   margin-left: auto;
 }
+.menu-btn {
+  padding: 4px 12px;
+  background-color: #ffffff;
+  border: 1px solid #dfdfdf;
+  border-radius: 5px;
+  color: #838383;
+  display: none;
+}
 
 .logo {
   font-size: 20px;
@@ -77,7 +163,7 @@ nav {
   }
 
   a {
-    background-color: #a06dfd;
+    background-color: purple;
     padding: 10px 20px;
     font-size: 16px;
     color: white;
@@ -113,23 +199,23 @@ nav {
 
   & > div:hover {
     box-shadow: 0px 2px 12px 2px #99a6b14a;
+  }
 
-    .item-body {
-      padding: 1.25rem;
-      flex: 1 1 auto;
+  .item-body {
+    padding: 1.25rem;
+    flex: 1 1 auto;
 
-      h4 {
-        margin: 8px 0px;
-        font-size: 18px;
-        line-height: 1.2px;
-        color: #7d8b9a;
-      }
+    h4 {
+      margin: 8px 0px;
+      font-size: 18px;
+      line-height: 1.2px;
+      color: #7d8b9a;
     }
+  }
 
-    .item-footer {
-      border-top: 1px solid #dfdfdf;
-      padding: 0.75rem 1.25rem;
-    }
+  .item-footer {
+    border-top: 1px solid #dfdfdf;
+    padding: 0.75rem 1.25rem;
   }
 }
 .story {
@@ -228,6 +314,7 @@ nav {
 .page-footer {
   padding: 48px 0px 20px;
   background-color: #3d4143;
+  text-align: center;
   color: #cfcfcf;
   ul {
     font-size: 18px;

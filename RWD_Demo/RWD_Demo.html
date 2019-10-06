@@ -5,11 +5,22 @@
     <meta charset="UTF-8">
     <title>RWD_Demo</title>
     <link rel="stylesheet" href="css/RWD_Demo.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9cd7723fbe.js" crossorigin="anonymous"></script>
-</head>
+    <script>
+        $(function () {
+            if ($(".menu-btn").is(":visible")) {
+                $(".header-menu").hide();
+                $(".menu-btn").on("click", function () {
+                    $(".header-menu").toggle();
+                });
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -17,6 +28,9 @@
         <nav class="container">
             <a href="#" class="logo">Build School</a>
             <div class="menu">
+                <button class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <ul class="header-menu">
                     <li><a href="#">Intro</a></li>
                     <li><a href="#">Service</a></li>
@@ -125,10 +139,10 @@
         <div class="container">
             <div class="footer-menu">
                 <ul>
-                    <li><a href="#"></a>Service</li>
-                    <li><a href="#"></a>About</li>
-                    <li><a href="#"></a>Pricing</li>
-                    <li><a href="#"></a>Contact</li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-content">
