@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        //getElementById(抓取頁面上的元素)
+        function getElement(name) {
+            return document.getElementById(name);
+        }
+
+        //判斷是否可以送件
+        function Button_Submit() {
+            //抓取頁面上的checkboc1，取得是否checked
+            var isChecked = getElement('MustCheck').checked;
+            //如果是，就return true
+            if (isChecked) return true;
+            //否則就... 
+            alert('必須勾選同意!');
+            return false;
+        }
+
+        //當網頁載入完成後執行
+        window.onload = function () {
+            //hook event(在form1被submit時...)
+            getElement('form1').onsubmit = function () {
+                //呼叫 Button_Submit()
+                return Button_Submit();
+            };
+        };
+    </script>
+    <title>form Bootstrap</title>
+</head>
+
+<body style="background-color: darkgray">
+    <div class="container">
+        <form id="form1" name="form1"
+            action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=chenmenghan.build.school@gmail.com&redirect=http://www.google.com"
+            method="POST">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            個人資料 -- 必填
+                        </div>
+                        <div class="card-body">
+                            <span class="label">姓名：</span>
+                            <input type="text" name="Name" id="inputName" class="form-control" required="required"
+                                placeholder="請輸入">
+                            <span class="label">密碼：</span>
+                            <input type="text" name="PW" id="inputPW" class="form-control" required="required"
+                                placeholder="請輸入">
+                            <div class="radio">
+                                <label>
+                                    <span class="label">性別：</span>
+                                    <input type="radio" name="Sex" id="inputSex" value="1" checked>男
+                                    <input type="radio" name="Sex" id="inputSex" value="2">女
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            個人資料--興趣
+                        </div>
+                        <div class="card-body">
+                            <div class="checkbox">
+                                <label>
+                                    <span class="label">興趣：</span>
+                                    <input type="checkbox" name="joys" id="inputjoys" value="1">音樂
+                                    <input type="checkbox" name="joys" id="inputjoys" value="2">運動
+                                    <input type="checkbox" name="joys" id="inputjoys" value="3">閱讀
+                                    <input type="checkbox" name="joys" id="inputjoys" value="4">電影
+                                </label>
+                            </div>
+                            <textarea name="joys_text" id="inputjoys_text" class="form-control" rows="3"
+                                placeholder="請輸入"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="address row" style="margin-top: 50px">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            個人資料--地址
+                        </div>
+                        <div class="card-body">
+                            <span class="label">郵遞區號：</span>
+                            <input type="text" name="Dict" id="inputDict" class="form-control" value=""
+                                required="required" placeholder="請輸入">
+                            <div>
+                                <label>鄉鎮市 :</label>
+                                <select name="dict" id="inputdict" class="form-control mw-20" required="required">
+                                    <option id="dict" name="dict" value="1">台北市</option>
+                                    <option id="dict" name="dict" value="2" selected>新北市</option>
+                                    <option id="dict" name="dict" value="3">基隆市</option>
+                                    <option id="dict" name="dict" value="4">桃園市</option>
+                                </select>
+                            </div>
+                            <span class="label">詳細地址：</span>
+                            <input type="text" name="Address" id="inputAddress" class="form-control" placeholder="請輸入">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+
+            <div class="send" style="margin-top: 20px">
+                <div class="checkbox">
+                    <label Class="bg-danger text-white">
+                        <input type="checkbox" id="MustCheck" name="MustCheck" value="">
+                        請點選確認送出個資
+                    </label>
+                </div>
+                <button class="btn btn-light" type="submit">送出</button>
+                <button class="btn btn-light" type="reset">重新輸入</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
