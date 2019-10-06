@@ -3,20 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>RWD_Demo</title>
-    <link rel="stylesheet" href="css/RWD_Demo.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome-iconpicker/3.2.0/js/fontawesome-iconpicker.min.js">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <title>Build School</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://kit.fontawesome.com/9cd7723fbe.js" crossorigin="anonymous"></script>
     <script>
-        $(function () {
+        $(document).ready(function () {
             if ($(".menu-btn").is(":visible")) {
                 $(".header-menu").hide();
                 $(".menu-btn").on("click", function () {
-                    $(".header-menu").toggle();
+                    $("header-menu").toggle();
                 });
             }
         });
@@ -26,26 +22,26 @@
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo">Build School</a>
+            <a class="logo" href="#">Build</a>
             <div class="menu">
-                <button class="menu-btn">
+                <button class="menu-btn" id="menu-btn">
                     <i class="fas fa-bars"></i>
                 </button>
-                <ul class="header-menu">
+                <ul class="header-menu" id="header-menu">
                     <li><a href="#">Intro</a></li>
-                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Services</a></li>
                     <li><a href="#">Pricing</a></li>
                     <li><a href="#">Signup</a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    <section class="banner">
+    <section class="bammer">
         <div class="container">
             <div class="banner-text">
-                <h2>Build School 是軟體開發教育的先鋒，為學生打造更有競爭力的職場能力！</h2>
+                <h2>Build School 是軟體開發教育的先鋒，為學生打造更有競爭力的職涯！</h2>
                 <h4>START CODING AND GET COACHED FROM MENTORS.</h4>
-                <p><a href="#">Apply Now</a></p>
+                <p><a href="#" class="sugnup-a">Apply Now</a></p>
             </div>
         </div>
     </section>
@@ -92,46 +88,50 @@
         </div>
     </div>
     <div class="story">
-        <div class="container story-area">
-            <div class="story-content">
-                <div class="story-img">
-                    <img src="https://picsum.photos/seed/picsum/450/300" alt="">
+        <div class="container">
+            <div class="container story-area">
+                <div class="story-content">
+                    <div class="story-img">
+                        <img src="https://picsum.photos/seed/picsum/450/300" alt="">
+                    </div>
                 </div>
-            </div>
-            <div class="story-text">
-                <h3>
-                    透過身經百戰的實務講師、各大企業的資深軟體工程師或CTO，帶領同學實作一格真正運作的產品開發，解決真實世界的問題
-                    ，透過專題過程中的實作，培養解決問題的能力，這裡不只是程式教學或教育訓練，學的不只是技能
-                    ，而是Learn how to Learn，以因應變化多端的軟體開發技能，及自我尋找解答的能力。
-                </h3>
-                <p>Project - based Learning</p>
+                <div class="story-text">
+                    <h3>
+                        透過身經百戰的實務講師、各大企業的資深軟體工程師或CTO，帶領同學實作一格真正運作的產品開發，解決真實世界的問題
+                        ，透過專題過程中的實作，培養解決問題的能力，這裡不只是程式教學或教育訓練，學的不只是技能
+                        ，而是Learn how to Learn，以因應變化多端的軟體開發技能，及自我尋找解答的能力。
+                    </h3>
+                    <p>Project - based Learning</p>
+                </div>
             </div>
         </div>
     </div>
     <section class="join">
-        <div class="signup-content">
-            <h2>立刻加入</h2>
-            <p>Welcome.</p>
-            <div class="sign-form">
-                <div>
-                    <div class="input-div">
-                        <span><i class="fa fa-envelope"></i></span>
-                        <input type="text" name="" id="" placeholder="Enter your email address">
-                    </div>
-                    <div class="input-div">
-                        <span><i class="fa fa-lock"></i></span>
-                        <input type="text" name="" id="" placeholder="Enter your password">
-                    </div>
-                    <div class="input-div">
-                        <span><i class="fa fa-phone"></i></span>
-                        <input type="text" name="" id="" placeholder="Enter your number">
+        <div class="container">
+            <div class="signup-content">
+                <h2>立刻加入</h2>
+                <p>Welcome.</p>
+                <div class="sign-form">
+                    <div>
+                        <div class="input-div">
+                            <span><i class="fa fa-envelope"></i></span>
+                            <input type="text" name="" id="" placeholder="Enter your email address">
+                        </div>
+                        <div class="input-div">
+                            <span><i class="fa fa-lock"></i></span>
+                            <input type="text" name="" id="" placeholder="Enter your password">
+                        </div>
+                        <div class="input-div">
+                            <span><i class="fa fa-phone"></i></span>
+                            <input type="text" name="" id="" placeholder="Enter your number">
+                        </div>
                     </div>
                 </div>
+                <p>
+                    Be joining, you agree to the Terms & Conditions and Privacy Policy.
+                </p>
+                <a href="#">Sign up</a>
             </div>
-            <p>
-                Be joining, you agree to the Terms & Conditions and Privacy Policy.
-            </p>
-            <a href="#">Sign up</a>
         </div>
     </section>
     <footer class="page-footer">
