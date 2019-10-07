@@ -603,49 +603,5 @@ template {
 
 body {
   font-family: "Noto Sans TC", sans-serif;
-  margin: 0 auto;
-  width: 99%;
-}
-
-.banner-text {
-  text-align: center;
-}
-
-.banner-text h2 {
-  font-size: 56px;
-}
-
-.banner-text h4 {
-  font-size: 26px;
-}
-
-.banner-text a {
-  margin: 15px;
-}
-
-.content-text h2 {
-  font-size: 28px;
-  margin-bottom: 30px;
-}
-
-.content-card:hover {
-  -webkit-box-shadow: 0px 2px 12px 2px #99a6b14a;
-          box-shadow: 0px 2px 12px 2px #99a6b14a;
-}
-
-section {
-  text-align: center;
-}
-
-.content {
-  margin: 80px auto;
-  text-align: center;
-}
-
-.story {
-  width: 80%;
-  margin: 80px auto;
-  background-color: #677bff;
-  color: white;
 }
 /*# sourceMappingURL=style.css.map */
