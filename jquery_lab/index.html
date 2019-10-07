@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function BMI() {
+            $('#Button1').click(function (e) {
+                var h = $('#textHeight').val() / 100;
+                var w = $('#textWeight').val();
+                var result = (w / (h * h));
+                $('#result').html("BMI:" + result.toFixed(2));
+            });
+        }
+        function Border() {
+            $('#inputreraduis').change(function () {
+                var add = $('#inputreraduis').val();
+                $('img').removeClass();
+                $('img').addClass(add);
+            });
+        }
+        function ImgHover() {
+            $('img').hover(function () {
+                // over
+                $(this).css("transform", "scale(1.1)").css("transition-duration", "0.1s");
+            }, function () {
+                // out
+                $(this).css("transform", "scale(1)").css("transition-duration", "0.1s");
+            }
+            );
+        }
+        function Checkbox() {
+            $('#CheckAll').change(function (e) {
+                var check = $("#CheckAll").prop('checked');
+                $('#CheckBoxGroup>input').attr('checked', check);
+            });
+        };
+
+        $(function () {
+            BMI();
+            Checkbox();
+            Border();
+            ImgHover();
+        });
+    </script>
+    <style>
+        img {
+            width: 100%;
+        }
+
+        .px15 {
+            border-radius: 15px;
+        }
+
+        .px30 {
+            border-radius: 30px;
+        }
+
+        .px50 {
+            border-radius: 50px;
+        }
+    </style>
+    <title>JQuery_Lab</title>
+</head>
+
+<body>
+    <div class="row" style="margin:10px">
+        <div class="col-6">
+            <h1>BMI計算(改成jQuery版本)</h1>
+            <label>身高:</label>
+            <input class="form-control" id="textHeight" value="0" />
+            <label>體重:</label>
+            <input class="form-control" id="textWeight" value="0" />
+            <br />
+            <button class="btn btn-primary" id="Button1">計算</button>
+            <br />
+            <span id="result"></span>
+        </div>
+    </div>
+    <hr />
+    <div class="row" style="margin:10px">
+        <div class="col-12">
+            <input id="CheckAll" type="checkbox" />勾選全部
+            <div id="CheckBoxGroup">
+                <input type="checkbox" />項目1
+                <input type="checkbox" />項目2
+                <input type="checkbox" />項目3
+                <input type="checkbox" />項目4
+                <input type="checkbox" />項目5
+                <input type="checkbox" />項目6
+                <input type="checkbox" />項目7
+                <input type="checkbox" />項目8
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="col-md-12">
+        <select name="reraduis" id="inputreraduis" class="form-control col-md-2" required="required">
+            <option value="px15" checked>15px</option>
+            <option value="px30">30px</option>
+            <option value="px50">50px</option>
+        </select>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="img/1.jpg" class="img-responsive" alt="Image">
+        </div>
+        <div class="col-md-4">
+            <img src="img/2.jpg" class="img-responsive" alt="Image">
+        </div>
+        <div class="col-md-4">
+            <img src="img/3.jpg" class="img-responsive" alt="Image">
+        </div>
+    </div>
+
+</body>
+
+</html>
