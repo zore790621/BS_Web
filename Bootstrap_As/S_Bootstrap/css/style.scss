@@ -1,0 +1,15 @@
+@import "_normalize";
+@import "_bootsrtap_offset";
+
+body {
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+a.card:hover {
+  text-decoration: none;
+  box-shadow: 0px 2px 12px 2px #99a6b14a;
+}
+.carousel-caption {
+  top: 20px;
+  margin: 0 auto;
+}
