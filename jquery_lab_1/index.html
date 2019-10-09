@@ -95,10 +95,62 @@
             Show("BMI :" + bmi);
         }
     </script>
+    <script>
+        class OOXX {
+            constructor() {
+                /* 初始化 */
+                var a = [];
+                a[0] = ['', '', ''];
+                a[1] = ['', '', ''];
+                a[2] = ['', '', ''];
+            }
+
+            setPoint(x, y, point) {
+                a[x][y] = point;
+            }
+
+            HasWinner() {
+                /* 判斷勝利者 */
+
+                return '';
+            }
+        }
+        var OX = true;
+        var game = new OOXX();
+
+        $(function () {
+            $('.OOXX').click(function () {
+                SetPoint(this);
+            })
+        });
+        function SetPoint(obj) {
+            if (obj.innerText != '_') return;
+            if (OX == true) {
+                obj.innerText = 'O';
+                OX = false;
+            } else {
+                obj.innerText = 'X';
+                OX = true;
+            }
+
+            $('#display_OX').html("rowIndex: " + obj.parentElement.rowIndex + " CellIndex: " + obj.cellIndex + " --> " + obj.innerText);
+            //設定落子
+            game.setPoint(obj.parentElement.rowIndex, obj.cellIndex, obj.innerText);
+            //有人贏嗎?
+            if (game.HasWinner() != '') label.innerHTML = `<span style='color:red'>winner : ${game.HasWinner()}</span>`;
+        }
+    </script>
+    <!-- set ttf -->
     <style>
         @font-face {
             font-family: digital-7;
             src: url('ttf/digital-7.ttf');
+        }
+
+        td {
+            font-size: 100px;
+            width: 100px;
+            text-align: center;
         }
     </style>
     <title>jquery_lab_1</title>
@@ -204,6 +256,36 @@
                 <label id="Label1">結果:</label><br />
                 <input class="btn btn-primary" type="button" id="Button1_bmi" value="計算" />
             </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <h1>井字遊戲</h1>
+        </div>
+        <div class="row">
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                    </tr>
+                    <tr>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                    </tr>
+                    <tr>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                        <td class="OOXX">_</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <label for="" id="display_OX"></label>
         </div>
     </div>
 </body>
