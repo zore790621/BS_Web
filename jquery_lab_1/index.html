@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- script-1 -->
+    <script>
+        Date.prototype.Format = function (fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "H+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var timer_is_on = false;
+
+        function clock() {
+            if (timer_is_on == true) {
+                let dt = new Date();
+                $('#clock').html(dt.Format("yyyy-MM-dd HH:mm:ss"));
+                setTimeout(clock, 1000);
+            }
+        }
+        function setstart() {
+            timer_is_on = true;
+            clock();
+        }
+        function setstop() {
+            timer_is_on = false;
+            clock();
+        }
+
+        $(function () {
+            $('#start').click(setstart);
+            $('#stop').click(setstop);
+        });
+    </script>
+    <!-- script-2 -->
+    <script>
+        $(function () {
+            $('#inputeval').click(function (e) {
+                $('#outlabel').text(eval($('#inputtext').val()));
+            });
+        });
+    </script>
+    <!-- script-3 -->
+    <script>
+        function click_button() {
+            if ($(this).text() == 'AC')
+                return $('#inputScreen').val("");
+            if ($(this).text() == '=')
+                return $('#inputScreen').val(eval($('#inputScreen').val()));
+            $('#inputScreen').val($('#inputScreen').val() + $(this).text());
+        }
+
+        $(function () {
+            $('#buttons button').click(click_button);
+        });
+    </script>
+    <!-- script-4 -->
+    <script>
+        $(function () {
+            $('#Button1_bmi').click(function (e) {
+                Button1_Click();
+            });
+        });
+        function Show(msg) {
+            //請改成jQuery
+            $('#Label1').text(msg);
+        }
+
+        var BmiObj = {
+            height: 0,
+            weight: 0,
+            GetBmi: function () {
+                return this.weight / (Math.pow(this.height / 100, 2));
+            }
+        };
+
+        function Button1_Click() {
+            //請改成jQuery
+            BmiObj.height = $('#txbHeight').val();
+            BmiObj.weight = $('#txbWeight').val();
+            let bmi = BmiObj.GetBmi();
+            Show("BMI :" + bmi);
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: digital-7;
+            src: url('ttf/digital-7.ttf');
+        }
+    </style>
+    <title>jquery_lab_1</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <label for="" id="clock" style="font-family: digital-7;font-size: 50px;">TEST</label>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-primary mr-4" id="start">start</button>
+            <button type="button" class="btn btn-primary" id="stop">stop</button>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <label for="">使用eavl</label>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <label for=""></label>
+                <input type="text" class="form-control" name="inputtext" id="inputtext" aria-describedby="helpId"
+                    placeholder="">
+                <small id="helpId" class="form-text text-muted">輸入計算</small>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" type="button" id="inputeval">計算</button>
+        </div>
+        <div class="row">
+            <label for="" id="outlabel"></label>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row" style="margin-top: 50px ">
+            <div id="buttons" class="col-md-6">
+                <p>
+                    <input id="inputScreen" class="form-control" style="width: 180px" text="1234" />
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">AC</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">(</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">)</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">/</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">7</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">8</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">9</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">*</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">4</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">5</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">6</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">-</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">1</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">2</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">3</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">+</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">0</button>
+                    <button type="button" class="btn btn-light rounded-circle"
+                        style="width:40px;height:40px;">.</button>
+                    <button type="button" class="btn btn-light rounded" style="width:90px;height:40px;">=</button>
+                </p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <hr />
+    <div class="container">
+        <div class="row" style="margin: 10px">
+            <div class="col-6">
+                <label>身高:</label>
+                <input id="txbHeight" class="form-control" type="text" placeholder="輸入身高" />
+                <label>體重:</label>
+                <input id="txbWeight" class="form-control" type="text" placeholder="輸入體重" />
+
+                <label id="Label1">結果:</label><br />
+                <input class="btn btn-primary" type="button" id="Button1_bmi" value="計算" />
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

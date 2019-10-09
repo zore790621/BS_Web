@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -614,5 +615,9 @@ a.card:hover {
 .carousel-caption {
   top: 20px;
   margin: 0 auto;
+}
+
+.news-list li::before {
+  content: "．";
 }
 /*# sourceMappingURL=style.css.map */

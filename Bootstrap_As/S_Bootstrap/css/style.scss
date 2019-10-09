@@ -13,3 +13,6 @@ a.card:hover {
   top: 20px;
   margin: 0 auto;
 }
+.news-list li::before {
+  content: "．";
+}
