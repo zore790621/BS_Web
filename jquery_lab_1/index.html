@@ -95,23 +95,33 @@
             Show("BMI :" + bmi);
         }
     </script>
+    <!-- script-5 -->
     <script>
         class OOXX {
             constructor() {
                 /* 初始化 */
-                var a = [];
-                a[0] = ['', '', ''];
-                a[1] = ['', '', ''];
-                a[2] = ['', '', ''];
+                this.a = [];
+                this.a[0] = ['', '', ''];
+                this.a[1] = ['', '', ''];
+                this.a[2] = ['', '', ''];
             }
 
             setPoint(x, y, point) {
-                a[x][y] = point;
+                this.a[x][y] = point;
             }
 
             HasWinner() {
                 /* 判斷勝利者 */
-
+                for (let i = 0; i < 2; i++) {
+                    if (this.a[i][0] == this.a[i][1] && this.a[i][1] == this.a[i][2])
+                        return this.a[i][0];
+                    if (this.a[0][i] == this.a[1][i] && this.a[1][i] == this.a[2][i])
+                        return this.a[0][i];
+                }
+                if (this.a[0][0] == this.a[1][1] && this.a[1][1] == this.a[2][2])
+                    return this.a[0][0];
+                if (this.a[0][2] == this.a[1][1] && this.a[1][1] == this.a[2][0])
+                    return this.a[2][0];
                 return '';
             }
         }
@@ -123,21 +133,24 @@
                 SetPoint(this);
             })
         });
+
         function SetPoint(obj) {
-            if (obj.innerText != '_') return;
-            if (OX == true) {
-                obj.innerText = 'O';
-                OX = false;
-            } else {
-                obj.innerText = 'X';
-                OX = true;
+            console.log(game.HasWinner());
+            if (game.HasWinner() == '') {
+                if (obj.innerText != '_') return;
+                if (OX == true) {
+                    obj.innerText = 'O';
+                    OX = false;
+                } else {
+                    obj.innerText = 'X';
+                    OX = true;
+                }
+                $('#display_OX').html("rowIndex: " + obj.parentElement.rowIndex + " CellIndex: " + obj.cellIndex + " --> " + obj.innerText);
+                //設定落子
+                game.setPoint(obj.parentElement.rowIndex, obj.cellIndex, obj.innerText);
+                if (game.HasWinner() != '') $("#display_OX").after(`<span style='color:red'>winner : ${game.HasWinner()}</span>`);
             }
 
-            $('#display_OX').html("rowIndex: " + obj.parentElement.rowIndex + " CellIndex: " + obj.cellIndex + " --> " + obj.innerText);
-            //設定落子
-            game.setPoint(obj.parentElement.rowIndex, obj.cellIndex, obj.innerText);
-            //有人贏嗎?
-            if (game.HasWinner() != '') label.innerHTML = `<span style='color:red'>winner : ${game.HasWinner()}</span>`;
         }
     </script>
     <!-- set ttf -->
@@ -159,31 +172,28 @@
 <body>
     <div class="container">
         <div class="row">
-            <label for="" id="clock" style="font-family: digital-7;font-size: 50px;">TEST</label>
-        </div>
-        <div class="row">
-            <button type="button" class="btn btn-primary mr-4" id="start">start</button>
-            <button type="button" class="btn btn-primary" id="stop">stop</button>
-        </div>
-    </div>
-    <hr />
-    <div class="container">
-        <div class="row">
-            <label for="">使用eavl</label>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <label for=""></label>
-                <input type="text" class="form-control" name="inputtext" id="inputtext" aria-describedby="helpId"
-                    placeholder="">
-                <small id="helpId" class="form-text text-muted">輸入計算</small>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <label for="" id="clock" style="font-family: digital-7;font-size: 50px;">TEST</label>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <label for="">使用eavl</label>
+                <div class="form-group">
+                    <label for=""></label>
+                    <input type="text" class="form-control" name="inputtext" id="inputtext" aria-describedby="helpId"
+                        placeholder="">
+                    <small id="helpId" class="form-text text-muted">輸入計算</small>
+                </div>
             </div>
         </div>
         <div class="row">
-            <button class="btn btn-primary" type="button" id="inputeval">計算</button>
-        </div>
-        <div class="row">
-            <label for="" id="outlabel"></label>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <button type="button" class="btn btn-primary mr-4" id="start">start</button>
+                <button type="button" class="btn btn-primary" id="stop">stop</button>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <button class="btn btn-primary" type="button" id="inputeval">計算</button>
+                <label for="" id="outlabel"></label>
+            </div>
         </div>
     </div>
     <hr />
@@ -241,13 +251,7 @@
                     <button type="button" class="btn btn-light rounded" style="width:90px;height:40px;">=</button>
                 </p>
             </div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-    <hr />
-    <div class="container">
-        <div class="row" style="margin: 10px">
-            <div class="col-6">
+            <div class="col-md-6">
                 <label>身高:</label>
                 <input id="txbHeight" class="form-control" type="text" placeholder="輸入身高" />
                 <label>體重:</label>
@@ -261,32 +265,34 @@
     <hr />
     <div class="container">
         <div class="row">
-            <h1>井字遊戲</h1>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <h1>井字遊戲</h1>
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                        </tr>
+                        <tr>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                        </tr>
+                        <tr>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                            <td class="OOXX">_</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <label for="" id="display_OX">&emsp;</label>
         </div>
-        <div class="row">
-            <table border="1">
-                <tbody>
-                    <tr>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                    </tr>
-                    <tr>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                    </tr>
-                    <tr>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                        <td class="OOXX">_</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            
         </div>
-        <div class="row">
-            <label for="" id="display_OX"></label>
-        </div>
+        
     </div>
 </body>
 
