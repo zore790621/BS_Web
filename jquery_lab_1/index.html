@@ -152,6 +152,64 @@
             }
         }
     </script>
+    <!-- script-6 -->
+    <script>
+        var button;
+        var m = 0;
+        var s = 0;
+
+        function count() {
+            if (button) {
+                setTimeout(count, 1000);
+                if (m == 0) {
+                    if (s != 0) {
+                        s -= 1;
+                    } else {
+                        $('#message').text("時間到 請重新設置");
+                        button = false;
+                    }
+                } else {
+                    if (s != 0) {
+                        s -= 1;
+                    } else {
+                        m -= 1;
+                        s = 59;
+                    }
+                }
+                $("#inputs").val(s);
+                $("#inputm").val(m);
+            }
+            if ($("#inputs").val() == "NaN") {
+                $('#message').text("錯誤 請重新設置");
+                button = false;
+            }
+        }
+
+        $(function () {
+            $('.countdown').keyup(function (e) {
+                $('#message').text("");
+            });
+            
+            $("#cdset").click(function (e) {
+                if ($("#inputm").val() != 0) {
+                    m = $("#inputm").val();
+                }
+                if ($("#inputs").val() != 0) {
+                    s = $("#inputs").val();
+                }
+                button = true;
+                count();
+            });
+
+            $("#cdcont").click(function (e) {
+                button = true;
+                count();
+            });
+            $("#cdpass").click(function (e) {
+                button = false;
+            });
+        });
+    </script>
     <!-- set ttf -->
     <style>
         @font-face {
@@ -265,7 +323,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <h1>井字遊戲</h1>
+                <h1>井字遊戲</h1>
                 <table border="1">
                     <tbody>
                         <tr>
@@ -285,9 +343,38 @@
                         </tr>
                     </tbody>
                 </table>
+                <label for="" id="display_OX">&emsp;</label>
             </div>
-            <label for="" id="display_OX">&emsp;</label>
-        </div>        
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
+                <H2>倒數計時器</H2>
+                <div class="row align-items-center">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 offset-3 text-center">
+                        <span>分</span>
+                        <input type="text" name="m" id="inputm" class="countdown form-control"
+                            style="font-family: digital-7;">
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 text-center">
+                        <span>秒</span>
+                        <input type="text" name="s" id="inputs" class="countdown form-control"
+                            style="font-family: digital-7;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  text-center my-2">
+                        <button type="button" class="btn btn-primary" id="cdset">開始</button>
+
+                        <button type="button" class="btn btn-primary" id="cdpass">暫停</button>
+
+                        <button type="button" class="btn btn-primary" id="cdcont">繼續</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  text-center my-2">
+                        <span id="message"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
