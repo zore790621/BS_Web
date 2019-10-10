@@ -135,22 +135,21 @@
         });
 
         function SetPoint(obj) {
-            console.log(game.HasWinner());
             if (game.HasWinner() == '') {
-                if (obj.innerText != '_') return;
+                if ($(obj).text() != '_') return;
                 if (OX == true) {
-                    obj.innerText = 'O';
+                    $(obj).text('O');
                     OX = false;
                 } else {
-                    obj.innerText = 'X';
+                    $(obj).text('X');
                     OX = true;
                 }
-                $('#display_OX').html("rowIndex: " + obj.parentElement.rowIndex + " CellIndex: " + obj.cellIndex + " --> " + obj.innerText);
+                $('#display_OX').html("rowIndex: " + $(obj).parent().index() + " CellIndex: " + $(obj).index() + " --> " + $(obj).text());
                 //設定落子
                 game.setPoint(obj.parentElement.rowIndex, obj.cellIndex, obj.innerText);
+                //判斷輸贏
                 if (game.HasWinner() != '') $("#display_OX").after(`<span style='color:red'>winner : ${game.HasWinner()}</span>`);
             }
-
         }
     </script>
     <!-- set ttf -->
@@ -288,11 +287,7 @@
                 </table>
             </div>
             <label for="" id="display_OX">&emsp;</label>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            
-        </div>
-        
+        </div>        
     </div>
 </body>
 

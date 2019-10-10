@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>translator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#leftto").val('→');
+            $("#rightto").val('←');
+            $(window).resize(function () {
+                if ($(window).width() <= 575) {
+                    $("#leftto").val('↓');
+                    $("#rightto").val('↑');
+                } else {
+                    $("#leftto").val('→');
+                    $("#rightto").val('←');
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="card">
+                    <div class="card-header bg-primary text-light">
+                        <span class="label">請選擇語言</span>
+                        <select name="leftse" id="leftse" class="form-control">
+                            <option value="zh" selected>中文</option>
+                            <option value="en">英文</option>
+                            <option value="ja">日文</option>
+                            <option value="ko">韓文</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" name="leftinput" id="leftinput" placeholder="請輸入"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 align-self-center">
+                <div class="row">
+                    <div class="col-6 col-xs-6 col-sm-12 col-md-12 col-lg-12 text-center">
+                        <input name="leftto" id="leftto" class="btn btn-primary m-2" type="button">
+                    </div>
+                    <div class="col-6 col-xs-6 col-sm-12 col-md-12 col-lg-12 text-center">
+                        <input name="rightto" id="rightto" class="btn btn-primary m-2" type="button">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="card">
+                    <div class="card-header bg-primary text-light">
+                        <span class="label">請選擇語言</span>
+                        <select name="rightse" id="rightse" class="form-control">
+                            <option value="zh">中文</option>
+                            <option value="en" selected>英文</option>
+                            <option value="ja">日文</option>
+                            <option value="ko">韓文</option>
+                        </select>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" name="rightinput" id="rightinput"
+                                placeholder="請輸入"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        $("#leftto").click(function (e) {
+            let source = $("#leftinput").val();
+            if (source != "") {
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "Ocp-Apim-Subscription-Key": "d431307b199e4066b07c6a0883c6bc98",
+                        "Content-Type": "application/json"
+                    },
+                    url: `https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh&to=en&to=ja&to=ko`,
+                    data: JSON.stringify([{ "Text": source }]),
+                    dataType: "Json",
+                    success: function (response) {
+                        result = response[0].translations;
+                        $('#rightinput').val(result[$("#rightse")[0].selectedIndex].text);
+                    }
+                });
+            } else $("#rightinput").val("未輸入文字");
+        });
+
+
+        $("#rightto").click(function (e) {
+            let source = $("#rightinput").val();
+            if (source != "") {
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        "Ocp-Apim-Subscription-Key": "d431307b199e4066b07c6a0883c6bc98",
+                        "Content-Type": "application/json"
+                    },
+                    url: `https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=zh&to=en&to=ja&to=ko`,
+                    data: JSON.stringify([{ "Text": source }]),
+                    dataType: "Json",
+                    success: function (response) {
+                        result = response[0].translations;
+                        $('#leftinput').val(result[$("#leftse")[0].selectedIndex].text);
+                    }
+                });
+            } else $("#leftinput").val("未輸入文字");
+        });
+        
+        $("#rightse").change(function () {
+            if (result != undefined)
+                $('#rightinput').val(result[$("#rightse")[0].selectedIndex].text);
+        });
+
+        $("#leftse").change(function () {
+            if (result != undefined)
+                $('#leftinput').val(result[$("#leftse")[0].selectedIndex].text);
+        });
+    });
+</script>
+
+</html>
