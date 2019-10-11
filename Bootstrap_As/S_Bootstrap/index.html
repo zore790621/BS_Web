@@ -48,7 +48,7 @@
                     <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownId" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="#">登入/註冊</a>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#signupModal">登入/註冊</a>
                         <a class="dropdown-item" href="#">網路客服</a>
                     </div>
                 </li>
@@ -308,6 +308,81 @@
             </div>
         </div>
     </footer>
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#login" role="tab"
+                                aria-controls="pills-home" aria-selected="true">登入</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#signup" role="tab"
+                                aria-controls="pills-profile" aria-selected="false">註冊</a>
+                        </li>
+                    </ul>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="login">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="email" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" placeholder="請輸入 email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">密碼</label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                        placeholder="請輸入密碼">
+                                    <small class="form-text text-muted">6~30個英數字元，分大小寫</small>
+                                </div>
+                                <div class="mb-3">
+                                    <a href="#">忘記密碼</a>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block">登入</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="signup">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="email" class="form-control" id="InputEmail1"
+                                        aria-describedby="emailHelp" placeholder="請輸入 email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">密碼</label>
+                                    <input type="password" class="form-control" id="InputPassword" placeholder="請輸入密碼">
+                                    <small class="form-text text-muted">6~30個英數字元，分大小寫</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">再次輸入密碼</label>
+                                    <input type="password" class="form-control" id="InputPasswordenter"
+                                        aria-describedby="emailHelp" placeholder="請再次輸入密碼">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">姓名</label>
+                                    <input type="text" class="form-control" id="name" placeholder="請輸入姓名">
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">我已閱讀並同意信義房屋網站的
+                                        <a href="#">服務條款</a>與<a href="#">隱私權聲明</a>
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block">註冊</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
