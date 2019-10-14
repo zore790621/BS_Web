@@ -49,32 +49,61 @@
             $("#inputTextButtonafter").click(inputTextButtonafter);
 
             $("#inputTextButton").click(inputTextButton);
-            
+
+            $('#Data tbody').on('click', 'tr', rowchange);
+
             $("#re").click(re);
 
             $("#del").click(del);
 
-
-            $('#Data tbody').on('click', 'tr', function () {
-                //取得當前點選的資料
-                CurrentEditItem = dt.row(this).data();
-                //顯示當前點選的資料
-                console.log(dat.indexOf(CurrentEditItem));
-                $('#AddStorageShow').modal();
-                $('#inputName').val(CurrentEditItem[0]);
-                $('#inputBirthday').val(CurrentEditItem[1]);
-                $('#inputPhone').val(CurrentEditItem[2]);
-                $('#inputEmail').val(CurrentEditItem[3]);
-                $('#inputAddress').val(CurrentEditItem[4]);
-            });
-
             LoadData();
         });
+        //匯入窗口修改
+        function inputShow() {
+            $('#inputTextButton').css('display', 'block');
+            $('#inputTextButtonafter').css('display', 'block');
+            $("#inputText").val('');
+            $('#StorageInputShow').modal();
 
-        function AddShow() { 
-            
-         }
+        }
+        //匯出窗口修改
+        function outputShow() {
+            $('#StorageInputShow').modal();
+            $('#inputTextButtonafter').css('display', 'none');
+            $('#inputTextButton').css('display', 'none');
+            let str = JSON.stringify(dat);
+            $("#inputText").val(str);
+        }
+        //新增窗口修改
+        function AddShow() {
+            $('#inputName').val('');
+            $('#inputBirthday').val('');
+            $('#inputPhone').val('');
+            $('#inputEmail').val('');
+            $('#inputAddress').val('');
+            $('#re').css('display', 'none');
+            $('#del').css('display', 'none');
+            $('#inputbutton').css('display', 'block');
 
+            $('#AddStorageShow').modal();
+        }
+        //row視窗修改
+        function rowchange() {
+            //取得當前點選的資料
+            CurrentEditItem = dt.row(this).data();
+            //顯示當前點選的資料
+
+            $('#re').css('display', 'block');
+            $('#del').css('display', 'block');
+            $('#inputbutton').css('display', 'none');
+            $('#AddStorageShow').modal();
+            $('#inputName').val(CurrentEditItem[0]);
+            $('#inputBirthday').val(CurrentEditItem[1]);
+            $('#inputPhone').val(CurrentEditItem[2]);
+            $('#inputEmail').val(CurrentEditItem[3]);
+            $('#inputAddress').val(CurrentEditItem[4]);
+        }
+        //覆蓋匯入
         function inputTextButton() {
             dat = JSON.parse($("#inputText").val());
 
@@ -84,7 +113,7 @@
             dt.rows.add(dat);
             dt.draw();
         }
-
+        //新增匯入
         function inputTextButtonafter() {
             input = JSON.parse($("#inputText").val());
             $.each(input, function (i, item) {
@@ -94,25 +123,7 @@
             SaveData();
             LoadData();
         }
-
-        function inputShow() {
-            $('#inputTextButton').css('display', 'block');
-            $('#inputTextButtonafter').css('display', 'block');
-            $("#inputText").val('');
-            $('#StorageInputShow').modal();
-
-        }
-
-        function outputShow() {
-            $('#StorageInputShow').modal();
-            $('#inputTextButtonafter').css('display', 'none');
-            $('#inputTextButton').css('display', 'none');
-            let str = JSON.stringify(dat);
-            $("#inputText").val(str);
-        }
-
-
-
+        //新增row
         function inputbutton() {
             newdata = [
                 $('#inputName').val(),
@@ -130,13 +141,7 @@
             SaveData();
             LoadData();
         }
-
-        function refreshData() {
-            dt.clear();
-            dt.rows.add(dat);
-            dt.draw();
-        }
-
+        //讀取是否有localStorage
         function LoadData() {
             if (localStorage.getItem('redat') != null) {
                 let str = localStorage.getItem('redat');
@@ -144,10 +149,40 @@
             }
             refreshData();
         }
-
+        //存取至localStorage
         function SaveData() {
             let str = JSON.stringify(dat);
             localStorage.setItem('redat', str);
+        }
+        //修改row
+        function re() {
+            newdata = [
+                $('#inputName').val(),
+                $('#inputBirthday').val(),
+                $('#inputPhone').val(),
+                $('#inputEmail').val(),
+                $('#inputAddress').val()
+            ];
+
+            let delindex = dat.indexOf(CurrentEditItem);
+            dat[delindex] = newdata;
+            SaveData();
+            LoadData();
+            $('#AddStorageShow').modal('hide');
+        }
+        //刪除row
+        function del() {
+            let delindex = dat.indexOf(CurrentEditItem);
+            dat.splice(delindex, 1);
+            SaveData();
+            LoadData();
+            $('#AddStorageShow').modal('hide');
+        }
+        //重致送出Datatable
+        function refreshData() {
+            dt.clear();
+            dt.rows.add(dat);
+            dt.draw();
         }
     </script>
 </head>
