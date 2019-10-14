@@ -85,7 +85,9 @@
 </body>
 <script>
     $(function () {
+        var result;
         $("#leftto").click(function (e) {
+            localStorage.setItem('left', $("#leftinput").val());
             let source = $("#leftinput").val();
             if (source != "") {
                 $.ajax({
@@ -107,6 +109,7 @@
 
 
         $("#rightto").click(function (e) {
+            localStorage.setItem('right', $("#rightinput").val());
             let source = $("#rightinput").val();
             if (source != "") {
                 $.ajax({
@@ -125,17 +128,22 @@
                 });
             } else $("#leftinput").val("未輸入文字");
         });
-        
+
+        $('#rightinput').val(localStorage.getItem('right'));
+        $('#leftinput').val(localStorage.getItem('left'));
+
         $("#rightse").change(function () {
-            if (result != undefined)
+            if (!result == false)
                 $('#rightinput').val(result[$("#rightse")[0].selectedIndex].text);
         });
 
         $("#leftse").change(function () {
-            if (result != undefined)
+            if (!result == false)
                 $('#leftinput').val(result[$("#leftse")[0].selectedIndex].text);
         });
     });
+
+
 </script>
 
 </html>
