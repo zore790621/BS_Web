@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>datatable</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- jquery-datatable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <script>
+
+        var dat = [
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+            ['Eric', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號13樓'],
+        ];
+
+        var dat2 = [
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+            ['Amy', '1980/1/1', '0912345678', 'eric@gmail.com', '台北市光復南路179號14樓'],
+        ];
+        $(function () {
+            dt = $('#Data').DataTable(
+                {
+                    data: dat,
+                    columns: [
+                        { title: "Name" },
+                        { title: "birthday" },
+                        { title: "phone" },
+                        { title: "Email" },
+                        { title: "address" }
+                    ]
+                }
+            );
+            $('#update').click(function () {
+                dt.clear();
+                dt.rows.add(dat2);
+                dt.draw();
+            });
+        });
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <table id="Data" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="button" id="update">update</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
