@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlKWP4uWjQIR3WDAWLAu6rUhBfc3_ppag&callback=initMap"
+        async defer></script>
+    <script>
+        $(function () {
+
+        });
+    </script>
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(
+                document.getElementById('map'),
+                { center: new google.maps.LatLng(25.0420753, 121.5361051), zoom: 16 });
+
+            var icons = {
+                ubike: {
+                    icon: './images/bike.png'
+                }
+            };
+            var features = GetUBick();
+
+            // var features = [{
+            //     position: new google.maps.LatLng(25.0420753, 121.5361051),
+            //     type: 'ubike'
+            // }
+            // ];
+
+            // Create markers.
+            for (var i = 0; i < features.length; i++) {
+                var marker = new google.maps.Marker({
+                    position: features[i].position,
+                    icon: icons[features[i].type].icon,
+                    map: map
+                });
+            };
+        }
+        function GetUBick() {
+            var Opendata = GetOpenData();
+            var ubikedata = [];
+            $.each(Opendata.retVal, function (i, val) {
+                var singleitem = {
+                    position: new google.maps.LatLng(val.lat, val.lng),
+                    type: 'ubike'
+                };
+                ubikedata.push(singleitem);
+            });
+            return ubikedata;
+        }
+        function GetOpenData() {
+            var dataubike;
+            $.ajax({
+                type: "GET",
+                url: "https://tcgbusfs.blob.core.windows.net/blobyoubike/YouBikeTP.json",
+                success: function (data) {
+                    dataubike = data;
+                },
+                error: function (XHR) {
+                    alert(XHR);
+                },
+                async: false
+            });
+            return dataubike;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="map"></div>
+</body>
+
+</html>
