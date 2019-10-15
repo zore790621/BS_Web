@@ -67,16 +67,24 @@
       getElement('start').onclick = Start;
       getElement("cheat").onclick = Cheat;
       getElement("guess").onclick = Guess;
+      getElement("guessResults").innerHTML = "";
+      getElement("userGuess").value = "";
+      arrNum = [];
     }
     function Cheat() {
-      getElement("userGuess").value = `答案是${arrNum[0]} ${arrNum[1]} ${arrNum[2]} ${arrNum[3]}`;
-      getElement("start").setAttribute("disabled", "disabled");
-      getElement("cheat").setAttribute("disabled", "disabled");
-      getElement("guess").setAttribute("disabled", "disabled");
+      if (arrNum.length == 4) {
+        getElement("userGuess").value = `答案是${arrNum[0]} ${arrNum[1]} ${arrNum[2]} ${arrNum[3]}`;
+        getElement("start").setAttribute("disabled", "disabled");
+        getElement("cheat").setAttribute("disabled", "disabled");
+        getElement("guess").setAttribute("disabled", "disabled");
+        getElement("guess").onclick = "";
+      } else {
+        getElement("userGuess").value = "請按放棄重來";
+      }
     }
     function Guess() {
       var input = getElement("userGuess").value;
-      if (input != "") {
+      if (input != "" && input.length == 4 && arrNum.length == 4) {
         let a = 0;
         let b = 0;
         for (i = 0; i <= 3; i++) {
@@ -94,28 +102,32 @@
           let ul = getElement("guessResults");
           let li = document.createElement("li");
           let span = document.createElement("span");
-          span.appendChild(document.createTextNode(`${a}A${b}B`));
           span.setAttribute("class", "label label-success");
-          li.after(span);
+          span.appendChild(document.createTextNode(`${a}A${b}B`));
           li.setAttribute("class", "list-group-item");
+          li.appendChild(span);
+          li.appendChild(document.createTextNode(input));
           ul.appendChild(li);
           getElement("start").setAttribute("disabled", "disabled");
           getElement("cheat").setAttribute("disabled", "disabled");
           getElement("guess").setAttribute("disabled", "disabled");
           getElement("cheat").setAttribute("onclick", "");
           getElement("guess").setAttribute("onclick", "");
+          getElement("userGuess").value = "勝利";
         } else {
           let ul = getElement("guessResults");
           let li = document.createElement("li");
           let span = document.createElement("span");
-          span.appendChild(document.createTextNode(`${a}A${b}B`));
           span.setAttribute("class", "label label-danger");
-          li.appendChild(span);
+          span.appendChild(document.createTextNode(`${a}A${b}B`));
           li.setAttribute("class", "list-group-item");
+          li.appendChild(span);
+          li.appendChild(document.createTextNode(input));
           ul.appendChild(li);
         }
-        console.log(`a = ${a} b = ${b} input= ${input} arrNum = ${arrNum}`);
         getElement("userGuess").value = "";
+      }else{
+        getElement("userGuess").value = "請輸入數值,並只能輸入4位不相同數字. 爆氣請按放棄重來,再按開始重新挑戰.";
       }
     }
   </script>

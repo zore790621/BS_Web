@@ -6,8 +6,10 @@
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         /* Always set the map height explicitly to define the size of the div
@@ -35,12 +37,15 @@
         var map;
         function initMap() {
             map = new google.maps.Map(
-                document.getElementById('map'),
+                getElement('map'),
                 { center: new google.maps.LatLng(25.0420753, 121.5361051), zoom: 16 });
 
             var icons = {
                 ubike: {
                     icon: './images/bike.png'
+                },
+                bubike: {
+                    icon: './images/bike_blue.png'
                 }
             };
             var features = GetUBick();
@@ -52,23 +57,48 @@
             // ];
 
             // Create markers.
+
             for (var i = 0; i < features.length; i++) {
                 var marker = new google.maps.Marker({
                     position: features[i].position,
                     icon: icons[features[i].type].icon,
-                    map: map
+                    map: map,
+                    title: features[i].title
                 });
             };
         }
         function GetUBick() {
             var Opendata = GetOpenData();
             var ubikedata = [];
+            let buttons = [];
             $.each(Opendata.retVal, function (i, val) {
-                var singleitem = {
-                    position: new google.maps.LatLng(val.lat, val.lng),
-                    type: 'ubike'
-                };
+                if (val.sbi > 10) {
+                    var singleitem = {
+                        position: new google.maps.LatLng(val.lat, val.lng),
+                        type: 'ubike',
+                        title: '總數:' + val.tot + '剩餘:' + val.sbi
+                    };
+                } else {
+                    var singleitem = {
+                        position: new google.maps.LatLng(val.lat, val.lng),
+                        type: 'bubike',
+                        title: '總數:' + val.tot + '剩餘:' + val.sbi
+                    };
+                }
+                singlebutton = { sarea: val.sarea, sareaen: val.sareaen };
+                buttons.push(singlebutton);
+
                 ubikedata.push(singleitem);
+            });
+            // 去除重複值
+            let result = [...new Set(buttons.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
+            $.each(result, function (i, val) {
+                let list = getElement("list");
+                let button = document.createElement("button");
+                button.appendChild(document.createTextNode(val.sarea));
+                button.setAttribute("class", "list-group-item list-group-item-action");
+                button.setAttribute("id", `${val.sareaen}`);
+                list.appendChild(button);
             });
             return ubikedata;
         }
@@ -87,11 +117,28 @@
             });
             return dataubike;
         }
+        function getElement(name) {
+            return document.getElementById(name);
+        }
     </script>
 </head>
 
 <body>
-    <div id="map"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="list-group text-center" id="list">
+                    <button type="button" class="list-group-item list-group-item-action active">全區</button>
+                </div>
+            </div>
+            <div class="col-10 col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                <div class="row">
+                    <div id="map" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="width:100%;height:900px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
