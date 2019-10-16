@@ -32,11 +32,13 @@
             $('#inputText').val('');
             let img_p = `<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />`;
             $('#ultest').append($("<li></li>").append(img_p, $("<p></p>").text(UserSay)).addClass("replies"));
-            let img_r = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />`;
+            $('#messages').scrollTop($('#messages')[0].scrollHeight);
 
+            let img_r = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />`;
             ajaxRetrun(UserSay, function (ret) {
                 console.log(ret);
                 $('#ultest').append($("<li></li>").append(img_r, $("<p></p>").text(ret.answers[0].answer)).addClass("sent"));
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
             });
         }
         function ajaxRetrun(UserSay, s) {
