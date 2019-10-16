@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- jquery-datatable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
+    <script>
+        var dat = [
+            ['Eric', '0912345678', '1980/1/1', 'eric@gmail.com', '台北市光復南路179號13樓', []]
+        ];
+
+        $(function () {
+            $('#Tags').tagsInput({ width: 'auto' });
+            dt = $('#Data').DataTable(
+                {
+                    data: dat,
+                    columns: [
+                        { title: "Name" },
+                        { title: "birthday" },
+                        { title: "phone" },
+                        { title: "Email" },
+                        { title: "address" },
+                        { title: "tags" }
+                    ]
+                }
+            );
+
+            $("#AddShow").click(AddShow);
+
+            $("#inputbutton").click(inputbutton);
+
+            $("#inputShowButton").click(inputShow);
+
+            $("#outputShowButton").click(outputShow);
+
+            $("#inputTextButtonafter").click(inputTextButtonafter);
+
+            $("#inputTextButton").click(inputTextButton);
+
+            $('#Data tbody').on('click', 'tr', rowchange);
+
+            $("#re").click(re);
+
+            $("#del").click(del);
+
+            LoadData();
+        });
+        //匯入窗口修改
+        function inputShow() {
+            $('#inputTextButton').css('display', 'block');
+            $('#inputTextButtonafter').css('display', 'block');
+            $("#inputText").val('');
+            $('#StorageInputShow').modal();
+
+        }
+        //匯出窗口修改
+        function outputShow() {
+            $('#StorageInputShow').modal();
+            $('#inputTextButtonafter').css('display', 'none');
+            $('#inputTextButton').css('display', 'none');
+            let str = JSON.stringify(dat);
+            $("#inputText").val(str);
+        }
+        //新增窗口修改
+        function AddShow() {
+            $('#inputName').val('');
+            $('#inputBirthday').val('');
+            $('#inputPhone').val('');
+            $('#inputEmail').val('');
+            $('#inputAddress').val('');
+            $('#Tags').val('');
+            $('#re').css('display', 'none');
+            $('#del').css('display', 'none');
+            $('#inputbutton').css('display', 'block');
+
+            $('#AddStorageShow').modal();
+        }
+        //row視窗修改
+        function rowchange() {
+            //取得當前點選的資料
+            CurrentEditItem = dt.row(this).data();
+            //顯示當前點選的資料
+
+            $('#re').css('display', 'block');
+            $('#del').css('display', 'block');
+            $('#inputbutton').css('display', 'none');
+            $('#AddStorageShow').modal();
+            $('#inputName').val(CurrentEditItem[0]);
+            $('#inputBirthday').val(CurrentEditItem[1]);
+            $('#inputPhone').val(CurrentEditItem[2]);
+            $('#inputEmail').val(CurrentEditItem[3]);
+            $('#inputAddress').val(CurrentEditItem[4]);
+            $('#Tags').importTags(CurrentEditItem[5]);
+        }
+        //覆蓋匯入
+        function inputTextButton() {
+            dat = JSON.parse($("#inputText").val());
+
+            SaveData();
+
+            dt.clear();
+            dt.rows.add(dat);
+            dt.draw();
+        }
+        //新增匯入
+        function inputTextButtonafter() {
+            input = JSON.parse($("#inputText").val());
+            $.each(input, function (i, item) {
+                newdata = [item[0], item[1], item[2], item[3], item[4], item[5]];
+                dat.push(newdata);
+            });
+            SaveData();
+            LoadData();
+        }
+        //新增row
+        function inputbutton() {
+            newdata = [
+                $('#inputName').val(),
+                $('#inputBirthday').val(),
+                $('#inputPhone').val(),
+                $('#inputEmail').val(),
+                $('#inputAddress').val(),
+                $('#Tags').val()
+            ];
+            $('#inputName').val('');
+            $('#inputBirthday').val('');
+            $('#inputPhone').val('');
+            $('#inputEmail').val('');
+            $('#inputAddress').val('');
+            $('#Tags').importTags('');
+            dat.push(newdata);
+            SaveData();
+            LoadData();
+        }
+        //讀取是否有localStorage
+        function LoadData() {
+            if (localStorage.getItem('redat') != null) {
+                let str = localStorage.getItem('redat');
+                dat = JSON.parse(str);
+            }
+            refreshData();
+        }
+        //存取至localStorage
+        function SaveData() {
+            let str = JSON.stringify(dat);
+            localStorage.setItem('redat', str);
+        }
+        //修改row
+        function re() {
+            newdata = [
+                $('#inputName').val(),
+                $('#inputBirthday').val(),
+                $('#inputPhone').val(),
+                $('#inputEmail').val(),
+                $('#inputAddress').val(),
+                $('#Tags').val()
+            ];
+
+            let delindex = dat.indexOf(CurrentEditItem);
+            dat[delindex] = newdata;
+            SaveData();
+            LoadData();
+            $('#AddStorageShow').modal('hide');
+        }
+        //刪除row
+        function del() {
+            let delindex = dat.indexOf(CurrentEditItem);
+            dat.splice(delindex, 1);
+            SaveData();
+            LoadData();
+            $('#AddStorageShow').modal('hide');
+        }
+        //重致送出Datatable
+        function refreshData() {
+            dt.clear();
+            dt.rows.add(dat);
+            dt.draw();
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-2 sticky-top">
+        <a class="navbar-brand"></a>
+        <button class="navbar-toggler" data-target="#my-nav" data-toggle="collapse" aria-controls="my-nav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">個人通訊錄</a>
+        <div id="my-nav" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item text-light">
+                    <a class="btn btn-dark" type="button" id="AddShow">新增</a>
+                    <a class="btn btn-dark" type="button" id="inputShowButton">匯入</a>
+                    <a class="btn btn-dark" type="button" id="outputShowButton">匯出</a>
+                </li>
+            </ul>
+            <form class="navbar-form pull-right">
+                <input type="text" style="width: 200px;">
+                <button type="submit" class="btn btn-primary">搜尋</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <table id="Data" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start date</th>
+                            <th>Start date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddStorageShow" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="form-group">
+                        <label for="inputName">姓名</label>
+                        <input type="text" class="form-control" name="inputName" id="inputName">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputBirthday">生日</label>
+                        <input type="text" class="form-control" name="inputBirthday" id="inputBirthday">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPhone">電話</label>
+                        <input type="text" class="form-control" name="inputPhone" id="inputPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">信箱</label>
+                        <input type="text" class="form-control" name="inputEmail" id="inputEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">地址</label>
+                        <input type="text" class="form-control" name="inputAddress" id="inputAddress">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="Tags">Tags</label>
+                            <textarea class="form-control tagsinput" name="Tags" id="Tags" rows="10"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="inputbutton">新增</button>
+                    <button type="button" class="btn btn-primary" id="re">修改</button>
+                    <button type="button" class="btn btn-primary" id="del">刪除</button>
+                    <button type="button" class="btn btn-secondary" id="deletebutton" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="StorageInputShow" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="form-group">
+                        <label id="showlabel" for="inputText"></label>
+                        <textarea id="inputText" class="form-control" name="inputText" rows="20"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="inputTextButtonafter">往後匯入</button>
+                    <button type="button" class="btn btn-primary" id="inputTextButton">匯入</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src='./js/style.js'></script>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel='stylesheet prefetch'
+        href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        $(function () {
+            $("#sendquestion").click(sendquestion);
+            $('#inputText').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    sendquestion();
+                    return false;
+                }
+            });
+        });
+        function sendquestion() {
+            let UserSay = $('#inputText').val();
+            $('#inputText').val('');
+            let img_p = `<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />`;
+            $('#ultest').append($("<li></li>").append(img_p, $("<p></p>").text(UserSay)).addClass("replies"));
+            let img_r = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />`;
+
+            ajaxRetrun(UserSay, function (ret) {
+                console.log(ret);
+                $('#ultest').append($("<li></li>").append(img_r, $("<p></p>").text(ret.answers[0].answer)).addClass("sent"));
+            });
+        }
+        function ajaxRetrun(UserSay, s) {
+            $.ajax({
+                type: "POST",
+                headers: {
+                    "Authorization": "EndpointKey 72d39d3f-2421-44fd-84f4-02caff08569f",
+                    "Content-Type": "application/json"
+                },
+                url: "https://qnamaker-menghan-test.azurewebsites.net/qnamaker/knowledgebases/cc350704-6b28-49b2-a7e2-651bf406928d/generateAnswer",
+                data: JSON.stringify({ "question": UserSay }),
+                dataType: "Json",
+                success: s
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="frame">
+        <div id="sidepanel">
+            <div id="profile">
+                <div class="wrap">
+                    <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+                    <p>某帥哥</p>
+                </div>
+            </div>
+            <div id="contacts">
+                <ul>
+                    <li class="contact">
+                        <div class="wrap">
+                            <span class="contact-status online"></span>
+                            <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                            <div class="meta">
+                                <p class="name">Louis Litt</p>
+                                <p class="preview">You just got LITT up, Mike.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="contact active">
+                        <div class="wrap">
+                            <span class="contact-status busy"></span>
+                            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                            <div class="meta">
+                                <p class="name">對談機器人</p>
+                                <p class="preview">測試</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <div class="contact-profile">
+                <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                <p>對談機器人</p>
+                <div class="social-media">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="messages" id="messages">
+                <ul id="ultest">
+                    <li class="sent">
+                        <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                        <p>機器人回</p>
+                    </li>
+                    <li class="replies">
+                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                        <p>測試</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="message-input">
+                <div class="wrap">
+                    <input id="inputText" type="text" placeholder="Write your message..." />
+                    <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                    <button id="sendquestion" class="submit"><i class="fa fa-paper-plane"
+                            aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
