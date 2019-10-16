@@ -6,11 +6,12 @@
 
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlKWP4uWjQIR3WDAWLAu6rUhBfc3_ppag&callback=initMap"
+        async defer></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -26,19 +27,14 @@
             padding: 0;
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlKWP4uWjQIR3WDAWLAu6rUhBfc3_ppag&callback=initMap"
-        async defer></script>
-    <script>
-        $(function () {
-
-        });
-    </script>
     <script>
         var map;
+        var bottonval = 0;
+        var sarea;
         function initMap() {
             map = new google.maps.Map(
                 getElement('map'),
-                { center: new google.maps.LatLng(25.0420753, 121.5361051), zoom: 16 });
+                { center: new google.maps.LatLng(25.0420753, 121.5361051), zoom: 14 });
 
             var icons = {
                 ubike: {
@@ -72,35 +68,42 @@
             var ubikedata = [];
             let buttons = [];
             $.each(Opendata.retVal, function (i, val) {
-                if (val.sbi > 10) {
+                if (sarea == "全區" || sarea == undefined) {
                     var singleitem = {
                         position: new google.maps.LatLng(val.lat, val.lng),
-                        type: 'ubike',
+                        type: val.sbi > 10 ? 'ubike' : 'bubike',
                         title: '總數:' + val.tot + '剩餘:' + val.sbi
                     };
+                    ubikedata.push(singleitem);
                 } else {
-                    var singleitem = {
-                        position: new google.maps.LatLng(val.lat, val.lng),
-                        type: 'bubike',
-                        title: '總數:' + val.tot + '剩餘:' + val.sbi
-                    };
+                    if (sarea == val.sarea) {
+                        var singleitem = {
+                            position: new google.maps.LatLng(val.lat, val.lng),
+                            type: val.sbi > 10 ? 'ubike' : 'bubike',
+                            title: '總數:' + val.tot + '剩餘:' + val.sbi
+                        };
+                        ubikedata.push(singleitem);
+                    }
                 }
                 singlebutton = { sarea: val.sarea, sareaen: val.sareaen };
                 buttons.push(singlebutton);
-
-                ubikedata.push(singleitem);
             });
-            // 去除重複值
             let result = [...new Set(buttons.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
-            $.each(result, function (i, val) {
-                let list = getElement("list");
-                let button = document.createElement("button");
-                button.appendChild(document.createTextNode(val.sarea));
-                button.setAttribute("class", "list-group-item list-group-item-action");
-                button.setAttribute("id", `${val.sareaen}`);
-                list.appendChild(button);
-            });
+            if (bottonval < result.length) {
+                $('#list').empty();
+                $('#list').append($(`<button type="button" class="list-group-item list-group-item-action active">全區</button>`).on('click', changeActive));
+                $.each(result, function (i, val) {
+                    $('#list').append($(`<button type="button" class="list-group-item list-group-item-action"></button>`).html(val.sarea).on('click', changeActive));
+                });
+            }
+            bottonval = result.length;
             return ubikedata;
+        }
+        function changeActive() {
+            $("button").removeClass("active");
+            $(this).last().addClass("active");
+            sarea = $(this).html();
+            initMap(sarea);
         }
         function GetOpenData() {
             var dataubike;
@@ -117,6 +120,7 @@
             });
             return dataubike;
         }
+
         function getElement(name) {
             return document.getElementById(name);
         }
@@ -128,7 +132,6 @@
         <div class="row">
             <div class="col-2 col-xs-2 col-sm-2 col-md-2 col-lg-2">
                 <div class="list-group text-center" id="list">
-                    <button type="button" class="list-group-item list-group-item-action active">全區</button>
                 </div>
             </div>
             <div class="col-10 col-xs-10 col-sm-10 col-md-10 col-lg-10">
