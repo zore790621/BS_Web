@@ -30,11 +30,11 @@
         function sendquestion() {
             let UserSay = $('#inputText').val();
             $('#inputText').val('');
-            let img_p = `<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />`;
+            let img_p = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />`;
             $('#ultest').append($("<li></li>").append(img_p, $("<p></p>").text(UserSay)).addClass("replies"));
             $('#messages').scrollTop($('#messages')[0].scrollHeight);
 
-            let img_r = `<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />`;
+            let img_r = `<img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />`;
             ajaxRetrun(UserSay, function (ret) {
                 console.log(ret);
                 $('#ultest').append($("<li></li>").append(img_r, $("<p></p>").text(ret.answers[0].answer)).addClass("sent"));
@@ -104,11 +104,11 @@
             <div class="messages" id="messages">
                 <ul id="ultest">
                     <li class="sent">
-                        <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
                         <p>機器人回</p>
                     </li>
                     <li class="replies">
-                        <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                        <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
                         <p>測試</p>
                     </li>
                 </ul>
