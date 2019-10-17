@@ -20,9 +20,18 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-        var dat = [
-            ['Eric', '0912345678', '1980/1/1', 'eric@gmail.com', '台北市光復南路179號13樓'],
-        ];
+        var dat = returndat();
+
+        function returndat() {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:55086/api/First_WebAPI_",
+                dataType: "json",
+                success: function (data) {
+                    return data;
+                }
+            });
+        }
 
         $(function () {
             dt = $('#Data').DataTable(
