@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Timer</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: Digifont;
+            src: url('digital-7 (italic).ttf');
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            init();
+        });
+
+        function init() {
+            $('#btnstart').click(start);
+            $('#btnstart').click(runclock);
+            $('#btnpause').click(stop);
+        }
+
+        function start() {
+            pause = false;
+            
+        }
+
+        function runclock() {
+            var inputnum = $('#input1').val();
+            if (inputnum == 0) {
+                return alert("計時結束");
+            } else if (pause == false) {
+                inputnum = inputnum - 1;
+                $('#input1').val(inputnum);
+                setTimeout(runclock, 1000);
+            }
+        }
+
+        function stop() {
+            pause = true;
+        }
+    </script>
+    <style data-styled="" data-styled-version="4.2.0"></style>
+    <style data-styled="" data-styled-version="4.2.0"></style>
+    <style data-styled="" data-styled-version="4.2.0"></style>
+
+</head>
+
+<body>
+    <div class="col-md-6 offset-md-3  ">
+
+        <label for="time">請輸入想要倒數的時間</label>
+        <input class="form-control" id="input1">
+        <button type="button" id="btnstart" class="btn btn-primary ">開始</button>
+        <button type="button" id="btnpause" class="btn btn-primary ">暫停</button>
+    </div>
+
+
+    </div>
+</body>
+
+</html>

@@ -68,22 +68,13 @@
             var ubikedata = [];
             let buttons = [];
             $.each(Opendata.retVal, function (i, val) {
-                if (sarea == "全區" || sarea == undefined) {
+                if (sarea == val.sarea || sarea == "全區" || sarea == undefined) {
                     var singleitem = {
                         position: new google.maps.LatLng(val.lat, val.lng),
                         type: val.sbi > 10 ? 'ubike' : 'bubike',
                         title: '總數:' + val.tot + '剩餘:' + val.sbi
                     };
                     ubikedata.push(singleitem);
-                } else {
-                    if (sarea == val.sarea) {
-                        var singleitem = {
-                            position: new google.maps.LatLng(val.lat, val.lng),
-                            type: val.sbi > 10 ? 'ubike' : 'bubike',
-                            title: '總數:' + val.tot + '剩餘:' + val.sbi
-                        };
-                        ubikedata.push(singleitem);
-                    }
                 }
                 singlebutton = { sarea: val.sarea, sareaen: val.sareaen };
                 buttons.push(singlebutton);
