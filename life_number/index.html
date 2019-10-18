@@ -55,7 +55,8 @@
                 type: "Get",
                 url: `http://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${s}`,
                 dataType: "json",
-                success: whensuccess
+                success: whensuccess,
+                async: false
             });
         }
 
