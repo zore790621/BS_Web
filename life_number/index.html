@@ -6,6 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -40,23 +41,22 @@
             m = $('#datepicker').val().split("/")[1];
             d = $('#datepicker').val().split("/")[2];
 
-
+            star = constellation(m, d);
+            life = lifenumber();
 
             $('.Layer').css('display', 'block');
 
-            callajax();
+            callajax(star, function whensuccess(ret) {
+                $('#constellation').html(`${ret.name}  ${star}`);
+                $('#life').html(`${life} ${ret.lookup[life]}`);
+            });
         }
-        function callajax() {
-            star = constellation(m, d);
-            life = lifenumber();
+        function callajax(s, whensuccess) {
             $.ajax({
                 type: "Get",
-                url: `http://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${star}`,
+                url: `http://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${s}`,
                 dataType: "json",
-                success: function (ret) {
-                    $('#constellation').html(`${ret.name}  ${star}`);
-                    $('#life').html(`${life} ${ret.lookup[life]}`);
-                }
+                success: whensuccess
             });
         }
 
