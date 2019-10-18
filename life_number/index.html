@@ -40,23 +40,23 @@
             m = $('#datepicker').val().split("/")[1];
             d = $('#datepicker').val().split("/")[2];
 
-            star = constellation(m, d);
-            life = lifenumber();
+
 
             $('.Layer').css('display', 'block');
 
-            callajax(star, life, function whensuccess(ret) {
-                $('#constellation').html(`${ret.name}  ${star}`);
-                $('#life').html(`${life} ${ret.lookup[life]}`);
-            });
+            callajax();
         }
-        function callajax(s, l, whensuccess) {
+        function callajax() {
+            star = constellation(m, d);
+            life = lifenumber();
             $.ajax({
                 type: "Get",
-                url: `http://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${s}`,
+                url: `http://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${star}`,
                 dataType: "json",
-                success: whensuccess,
-                async: false
+                success: function (ret) {
+                    $('#constellation').html(`${ret.name}  ${star}`);
+                    $('#life').html(`${life} ${ret.lookup[life]}`);
+                }
             });
         }
 
