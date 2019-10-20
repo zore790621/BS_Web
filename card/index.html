@@ -41,17 +41,46 @@
     </style>
 
     <script>
-        var PlayCards = ['方塊3.png', 'Joker.png', '黑桃A.png', '紅心K.png', '方塊J.png', '梅花3.png'];
+        var CardNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        var FourSuits = ['C', 'D', 'H', 'S'];
+        var AllCard = []; //所有撲克牌
+
         var Cards = []; //所有牌
         var Card;
         var index = 0; //當前選擇的那個牌(在陣列中的index)
         var times = 0; //剩餘幾步
 
+        for (let i = 0; i < CardNumbers.length; i++) {
+            for (let j = 0; j < FourSuits.length; j++) {
+                AllCard.push(CardNumbers[i] + FourSuits[j]);
+            }
+        }
+        AllCard.push('Joker');
+        var level = ['20', '30', '40', '50'];
+        var SaveCard; //存取
+
+        //init
+        $(document).ready(function () {
+            //先hook事件
+            $('#ButtonStart').click(ButtonStart);
+            //把頁面上所有Cards放入陣列
+            for (let i = 1; i <= 16; i++) {
+                Card = $("#i" + i)[0];
+                if (Card)
+                    Cards.push(Card);
+            }
+            //Math.random() 取 0~1之間的亂數
+            //Math.floor() 取最大整數
+            //決定從哪個地方開始跑
+            index = Math.floor(Math.random() * Cards.length);
+        });
+
         function SetupRandomCards() {
             for (let i = 0; i < Cards.length; i++) {
-                let url = PlayCards[Math.floor(Math.random() * PlayCards.length)];
+                let url = AllCard[Math.floor(Math.random() * AllCard.length)];
+
                 //設定圖片位置
-                Cards[i].src = 'picture/' + url;
+                Cards[i].src = 'picture/' + url + '.jpg';
                 //將圖片名稱設定為 data 屬性
                 Cards[i].data = url;
             }
@@ -59,8 +88,8 @@
 
         function ButtonStart() {
             //把所有卡牌設為背面
-            $('img').prop('src', 'picture/back.png');
-            times = 20; //跑50次
+            $('img').prop('src', 'picture/back.jpg');
+            times = level[Math.floor(Math.random() * level.length)]; //跑50次
             Cards[index].className = "imgs";
             start();
         }
@@ -78,26 +107,50 @@
                 // $('img').attr("src", Cards[i].data);
                 setTimeout(start, 100);
             } else {
-                $('#result').html(Cards[index].data.replace(".png", ""));
+                if (AllCard.indexOf(Cards[index].data) < SaveCard) {
+                    $('#result').html('抽的卡' + toChinese(Cards[index].data) + '比上次小');
+                } else if (AllCard.indexOf(Cards[index].data) > SaveCard) {
+                    $('#result').html('抽的卡' + toChinese(Cards[index].data) + '比上次大');
+                } else if (AllCard.indexOf(Cards[index].data) == SaveCard) {
+                    $('#result').html(toChinese(Cards[index].data) + '抽到大小一樣');
+                } else {
+                    $('#result').html('本次抽到' + toChinese(Cards[index].data));
+                }
+                SaveCard = AllCard.indexOf(Cards[index].data);
             }
         }
 
-        //init
-        $(document).ready(function () {
-            //先hook事件
-            $('#ButtonStart').click(ButtonStart);
-            //把頁面上所有Cards放入陣列
-            for (let i = 1; i <= 16; i++) {
-                Card = $("#i" + i)[0];
-                if (Card)
-                    Cards.push(Card);
+        function toChinese(iCard) {
+            let result;
+            if (iCard != 'Joker') {
+                if (iCard.length == 2) {
+                    switch (iCard[1]) {
+                        case 'C':
+                            return '梅花' + iCard[0];
+                        case 'D':
+                            return '鑽石' + iCard[0];
+                        case 'H':
+                            return '愛心' + iCard[0];
+                        case 'S':
+                            return '黑桃' + iCard[0];
+                    }
+                }
+                if (iCard.length == 3) {
+                    switch (iCard[2]) {
+                        case 'C':
+                            return '梅花' + iCard[0] + iCard[1];
+                        case 'D':
+                            return '鑽石' + iCard[0] + iCard[1];
+                        case 'H':
+                            return '愛心' + iCard[0] + iCard[1];
+                        case 'S':
+                            return '黑桃' + iCard[0] + iCard[1];
+                    }
+                }
+            } else {
+                return 'Joker';
             }
-            console.log(Cards);
-            //Math.random() 取 0~1之間的亂數
-            //Math.floor() 取最大整數
-            //決定從哪個地方開始跑
-            index = Math.floor(Math.random() * Cards.length);
-        });
+        }
     </script>
 </head>
 
@@ -105,39 +158,39 @@
     <div class="container">
         <div class="row mt-5 text-center">
             <div class="col-2">
-                <img src='picture/back.png' id="i1" alt='' />
+                <img src='picture/back.jpg' id="i1" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i2" alt='' />
+                <img src='picture/back.jpg' id="i2" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i3" alt='' />
+                <img src='picture/back.jpg' id="i3" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i4" alt='' />
+                <img src='picture/back.jpg' id="i4" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i5" alt='' />
+                <img src='picture/back.jpg' id="i5" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i6" alt='' />
+                <img src='picture/back.jpg' id="i6" alt='' />
             </div>
         </div>
         <div class="row mt-5 text-center">
             <div class="col-2">
-                <img src='picture/back.png' id="i16" alt='' />
+                <img src='picture/back.jpg' id="i16" alt='' />
             </div>
             <div class="col-8">
                 <span>抽一張比大小</span><br />
                 <span id="result">...</span>
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i7" alt='' />
+                <img src='picture/back.jpg' id="i7" alt='' />
             </div>
         </div>
         <div class="row mt-5 text-center">
             <div class="col-2">
-                <img src='picture/back.png' id="i15" alt='' />
+                <img src='picture/back.jpg' id="i15" alt='' />
             </div>
             <div class="col-2">
             </div>
@@ -150,27 +203,27 @@
 
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i8" alt='' />
+                <img src='picture/back.jpg' id="i8" alt='' />
             </div>
         </div>
         <div class="row mt-5 text-center">
             <div class="col-2">
-                <img src='picture/back.png' id="i14" alt='' />
+                <img src='picture/back.jpg' id="i14" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i13" alt='' />
+                <img src='picture/back.jpg' id="i13" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i12" alt='' />
+                <img src='picture/back.jpg' id="i12" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i11" alt='' />
+                <img src='picture/back.jpg' id="i11" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i10" alt='' />
+                <img src='picture/back.jpg' id="i10" alt='' />
             </div>
             <div class="col-2">
-                <img src='picture/back.png' id="i9" alt='' />
+                <img src='picture/back.jpg' id="i9" alt='' />
             </div>
         </div>
         <div class="row mt-5">
