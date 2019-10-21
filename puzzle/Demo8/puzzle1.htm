@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>jQuery Puzzle</title>
+	<script type="text/javascript" src="js/jquery-1.3.1.js"></script>
+	<style type="text/css">
+		#dvPuzzle {
+			width: 480px;
+			height: 480px;
+			border: solid 5px blue;
+			padding: 0px;
+		}
+
+		.PicCell {
+			width: 118px;
+			height: 118px;
+			border-top: solid 1px white;
+			border-left: solid 1px white;
+			border-right: solid 1px gray;
+			border-bottom: solid 1px gray;
+			float: left;
+		}
+	</style>
+	<script>
+		$(function () {
+			//填入16張圖
+			for (var i = 0; i < 16; i++)
+				$("#dvPuzzle").append(`<div class='PicCell' id='Pic${i}'></div>`);
+			//塗上顏色以強化展示效果
+			$(".PicCell").css("background-color", "yellow");
+		});
+	</script>
+</head>
+
+<body>
+	<div id="dvPuzzle"></div>
+</body>
+
+</html>

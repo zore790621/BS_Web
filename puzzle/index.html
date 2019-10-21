@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>puzzle</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        #dvPuzzle {
+            width: 600px;
+            height: 600px;
+            border: solid 5px blue;
+            padding: 0px;
+        }
+
+        .PicCell {
+            border-top: solid 1px white;
+            border-left: solid 1px white;
+            border-right: solid 1px gray;
+            border-bottom: solid 1px gray;
+            float: left;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        var posConv = {};
+        var size;
+        var Level;
+        $(function () {
+            $('#inputLevel').change(function (e) {
+                Level = $('#inputLevel').val();
+                RePuzzle(Level);
+            });
+            RePuzzle(3);
+        });
+
+        function RePuzzle(lv) {
+            $('#dvPuzzle .PicCell').remove();
+            for (let i = 0; i < lv * lv; i++) {
+                size = 590 / lv;
+                $("#dvPuzzle").append(`<div class='PicCell' id='Pic${i}' style="width:${size}px;height:${size}px;"><img src='https://fakeimg.pl/600x600/?text=600x600&font=noto'></div>`);
+                let row = parseInt(i / lv + 1);
+                let col = i % lv + 1;
+                $(`#Pic${i} img`).css("margin-left", col * -size + 1).css("margin-top", row * -size + 1);
+                posConv[i] = { row: row, col: col };
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <div class="dvPuzzle" id="dvPuzzle"></div>
+            </div>
+            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+                <span class="label my-2">等級</span>
+                <select name="Level" id="inputLevel" class="form-control  my-2">
+                    <option value="3" selected>初階 3x3</option>
+                    <option value="4">中階 4x4</option>
+                    <option value="5">高階 5x5</option>
+                </select>
+                <input name="gamestat" id="gamestat" class="btn btn-primary  my-2" type="button" value="洗牌">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
