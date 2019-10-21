@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>Life Number</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 直接升級https -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="locales/bootstrap-datepicker.zh-TW.min.js"></script>
+    <script>
+        var m;
+        var d;
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+        $(function () {
+            $('#datepicker').datepicker({
+                format: "yyyy/mm/dd",
+                orientation: "auto right",
+                autoclose: true,
+                language: "zh-TW"
+            });
+
+            $('#datepicker').change(inputbirthday);
+        });
+
+        function inputbirthday() {
+            m = $('#datepicker').val().split("/")[1];
+            d = $('#datepicker').val().split("/")[2];
+
+            star = constellation(m, d);
+            life = lifenumber();
+
+            $('.Layer').css('display', 'block');
+
+            callajax(star, function whensuccess(ret) {
+                $('#constellation').html(`${ret.name}  ${star}`);
+                $('#life').html(`${life} ${ret.lookup[life]}`);
+            });
+        }
+        function callajax(s, whensuccess) {
+            $.ajax({
+                type: "Get",
+                url: `https://buildschoolnumerology.azurewebsites.net/api/Number/Numerology?constellation=${s}`,
+                dataType: "json",
+                success: whensuccess
+            });
+        }
+
+        function constellation(m, d) {
+            let star = {
+                "capricorn": [[12, 22], [1, 19]],
+                "aquarius": [[1, 20], [2, 18]],
+                "pisces": [[2, 19], [3, 20]],
+                "aries": [[3, 21], [4, 19]],
+                "taurus": [[4, 20], [5, 20]],
+                "gemini": [[5, 21], [6, 21]],
+                "cancer": [[6, 22], [7, 22]],
+                "leo": [[7, 23], [8, 22]],
+                "virgo": [[8, 23], [9, 22]],
+                "libra": [[9, 23], [10, 23]],
+                "scorpio": [[10, 24], [11, 22]],
+                "sagittarius": [[11, 23], [12, 21]]
+            };
+            for (let attr in star) {
+                if ((m == star[attr][0][0] && d >= star[attr][0][1]) || (m == star[attr][1][0] && d <= star[attr][1][1]))
+                    return attr;
+            }
+        }
+
+        function lifenumber() {
+            let number = $('#datepicker').val().replace(/\//g, "");
+            return loop(number);
+        }
+
+        function loop(num) {
+            num = num.toString();
+            let sum = 0;
+            for (let i = 0; i < num.length; i++) {
+                sum = sum + parseInt(num[i], 10);
+            }
+            return sum >= 10 ? loop(sum) : sum;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container ">
+        <div class="row">
+            <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                <span class="label">生命靈數</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="row my-2">
+                    <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <input id="datepicker" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="Layer row" style="display:none;">
+                    <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class=" col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 border">
+                            <div class="row my-2">
+                                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <span class="label">星座 : </span>
+                                    <span class="label" id="constellation"></span>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <span class="label">生命靈數 : </span>
+                                    <span class="label" id="life"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
