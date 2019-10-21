@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
         #dvPuzzle {
-            width: 600px;
-            height: 600px;
+            width: 610px;
+            height: 610px;
             border: solid 5px blue;
             padding: 0px;
         }
@@ -33,25 +33,91 @@
     </style>
     <script>
         var posConv = {};
-        var size;
-        var Level;
+        var Size;
+        var Level = 3;
+        var temppos = [];
+        var saveLost;
         $(function () {
+            RePuzzle(Level);
+
             $('#inputLevel').change(function (e) {
                 Level = $('#inputLevel').val();
                 RePuzzle(Level);
             });
-            RePuzzle(3);
         });
-
         function RePuzzle(lv) {
             $('#dvPuzzle .PicCell').remove();
             for (let i = 0; i < lv * lv; i++) {
-                size = 590 / lv;
-                $("#dvPuzzle").append(`<div class='PicCell' id='Pic${i}' style="width:${size}px;height:${size}px;"><img src='https://fakeimg.pl/600x600/?text=600x600&font=noto'></div>`);
-                let row = parseInt(i / lv + 1);
-                let col = i % lv + 1;
-                $(`#Pic${i} img`).css("margin-left", col * -size + 1).css("margin-top", row * -size + 1);
+                Size = 600 / lv;
+                $("#dvPuzzle").append(`
+                <div class='PicCell' id='Pic${i}' style="width:${Size}px;height:${Size}px;">
+                <img width="600px" height="600px" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-zXnybWvBTf1VYfc-0OdugbFflaujiW9mtxsGDeNCdicSeffo'>
+                </div>`);
+                let row = parseInt(i / lv);
+                let col = i % lv;
+                $(`#Pic${i} img`).css("margin-left", col * -Size).css("margin-top", row * -Size);
                 posConv[i] = { row: row, col: col };
+                temppos[i] = `Pic${i}`;
+            }
+            // console.log(temppos);
+            saveLost = $(`#Pic${Level * Level - 1} img`);
+            $(`#Pic${Level * Level - 1} img`).remove();
+            $(".PicCell").click(DivToMove);
+            $("input:button").click(PuzzleButton);
+        }
+        function DivToMove() {
+            let cells = $("#dvPuzzle div");
+            let i = cells.index(this);
+            let toCheck = getNearPos(i, Level);
+            while (toCheck.length > 0) {
+                let j = toCheck.pop();
+                if (cells.eq(j).attr("id") == `Pic${Level * Level - 1}`) {
+                    if (i > j) { let k = j; j = i; i = k; }
+                    let ahead = cells.eq(i);
+                    let behind = cells.eq(j);
+                    let behindPrev = behind.prev();
+                    if (Math.abs(i - j) == 1)
+                        behind.after(ahead);
+                    else {
+                        ahead.after(behind);
+                        behindPrev.after(ahead);
+                    }
+                }
+            }
+            checkwin();
+        }
+        function getNearPos(i, lv) {
+            let pool = [];
+            let row = posConv[i].row, col = posConv[i].col;
+            // console.log(`row:${row} col:${col}`);
+            if (row > 0)
+                pool.push((row - 1) * lv + col);
+            if (row < lv - 1)
+                pool.push((row + 1) * lv + col);
+            if (col > 0)
+                pool.push(i - 1);
+            if (col < lv - 1)
+                pool.push(i + 1);
+            console.log(pool);
+            return pool;
+        }
+        function PuzzleButton() {
+            for (let i = 0; i < 500; i++) {
+                let cells = $("#dvPuzzle div");
+                let toMove = getNearPos(cells.index($(`#Pic${Level * Level - 1}`)[0]), Level);
+                cells.eq(toMove[parseInt(Math.random() * toMove.length)]).click();
+            }
+        }
+        function checkwin() {
+            let check = [];
+            for (let i = 0; i < $('.PicCell').length; i++) {
+                check.push($('.PicCell')[i]['id']);
+            }
+            if (check.toString() == temppos.toString()) {
+                $('#modal').modal();
+                $(".PicCell").off("click");
+                $("input:button").off("click");
+                $(`#Pic${Level * Level - 1}`).append(saveLost);
             }
         }
     </script>
@@ -60,10 +126,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-8 col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <div class="dvPuzzle" id="dvPuzzle"></div>
-            </div>
-            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+            <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 offset-4 text-center ">
                 <span class="label my-2">等級</span>
                 <select name="Level" id="inputLevel" class="form-control  my-2">
                     <option value="3" selected>初階 3x3</option>
@@ -71,6 +134,24 @@
                     <option value="5">高階 5x5</option>
                 </select>
                 <input name="gamestat" id="gamestat" class="btn btn-primary  my-2" type="button" value="洗牌">
+            </div>
+        </div>
+        <img src="" alt="" sizes="600" srcset="">
+        <div class="dvPuzzle container-fluid" id="dvPuzzle"></div>
+    </div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <span>過關</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
