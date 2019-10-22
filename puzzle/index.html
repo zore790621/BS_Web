@@ -16,8 +16,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
         #dvPuzzle {
-            width: 610px;
-            height: 610px;
+            width: 490px;
+            height: 490px;
             border: solid 5px blue;
             padding: 0px;
         }
@@ -48,10 +48,10 @@
         function RePuzzle(lv) {
             $('#dvPuzzle .PicCell').remove();
             for (let i = 0; i < lv * lv; i++) {
-                Size = 600 / lv;
+                Size = 480 / lv;
                 $("#dvPuzzle").append(`
                 <div class='PicCell' id='Pic${i}' style="width:${Size}px;height:${Size}px;">
-                <img width="600px" height="600px" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-zXnybWvBTf1VYfc-0OdugbFflaujiW9mtxsGDeNCdicSeffo'>
+                <img width="480px" height="480px" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-zXnybWvBTf1VYfc-0OdugbFflaujiW9mtxsGDeNCdicSeffo'>
                 </div>`);
                 let row = parseInt(i / lv);
                 let col = i % lv;
