@@ -15,33 +15,60 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/Dropdowns.js"></script>
     <style>
+        th {
+            width: 100px;
+        }
+
+        tbody tr {
+            height: 100px;
+        }
+
+        td {
+            border: 1px #cccccc solid;
+        }
     </style>
     <script>
+        var Storage = [];
+        
         var Today = new Date();
         var _year = Today.getFullYear();
         var _month = Today.getMonth();
         var _day = Today.getDate();
-        var PrevMonth = new Date(_year, _month, 0);
-        var NextMonth = new Date(_year, _month + 1, 1);
+        var PrevMonth;
+        var NextMonth;
         var CalendarList = [];
+
         $(function () {
             MonthArray();
             ToWeek();
+            $('#prev').click(prevButton);
+            $('#next').click(nextButton);
+            $('#Activity').click(AddActivity);
+            $('#send').click();
+            $('#modify').click();
+            $('#delete').click();
+
+            for (let time = 0; time < 24; time++) {
+                $('#Time').append(`<option value="${time}">${time}</option>`)
+            }
         });
         function MonthArray() {
+            PrevMonth = new Date(_year, _month, 0);
+            NextMonth = new Date(_year, _month + 1, 1);
             let _str = Today.toString();
             let reY = _str.substr(11, 4);
             let reM = _str.substr(4, 3);
             CalendarList = [];
             $('#year').html(reY + "&emsp;");
             $('#month').html(reM);
-            let PDay = new Date(_year, _month - 1, PrevMonth.getDate() - PrevMonth.getDay());
-            let NDay = new Date(_year, _month + 1, NextMonth.getDate() + (6 - NextMonth.getDay()));
+            let PDay = new Date(_year, _month - 1, PrevMonth.getDate() - (PrevMonth.getDay() != 6 ? PrevMonth.getDay() : -1));
+            let NDay = new Date(_year, _month + 1, NextMonth.getDate() + (NextMonth.getDay() != 0 ? 6 - NextMonth.getDay() : -1));
             for (let l = PDay; l <= NDay; l.setDate(l.getDate() + 1)) {
                 let NewDate = {
                     'Year': l.getFullYear(),
-                    'Month': l.getMonth(),
+                    'Month': l.getMonth() + 1,
                     'Day': l.getDate(),
                 }
                 CalendarList.push(NewDate);
@@ -50,26 +77,78 @@
         function ToWeek() {
             let Week = CalendarList.length / 7;
             let index = 0;
+
+            $(".calendarWeek tr").remove();
             for (let i = 1; i < Week + 1; i++) {
                 $(".calendarWeek").append($(`<tr id="CalendarRow${i}"></tr>`));
                 for (let j = 0; j < 7; j++) {
-                    console.log(CalendarList[index]);
-                    if (CalendarList[index].Month == _month) {
-                        $(`#CalendarRow${i}`).append($(`
-                        <td id="${CalendarList[index].Year}${CalendarList[index].Month}${CalendarList[index].Day}" title="${CalendarList[index].Year}/${CalendarList[index].Month}/${CalendarList[index].Day}" style="border:3px #cccccc solid;">
-                            ${CalendarList[index].Day}</td>`).hover(HoverTd));
+                    let pid = `${CalendarList[index].Year}${CalendarList[index].Month}${CalendarList[index].Day}`;
+                    let ptitle = `${CalendarList[index].Year}/${CalendarList[index].Month}/${CalendarList[index].Day}`;
+                    if (CalendarList[index].Month == _month + 1) {
+                        $(`#CalendarRow${i}`).append($(`<td id="${pid}" title="${ptitle}" class="p-0 relative"></td>`).on("click", AddActivity).hover($(this).prop('title')).append(`<smail>${CalendarList[index].Day}</smail>`));
                     } else {
-                        $(`#CalendarRow${i}`).append($(`
-                        <td id="${CalendarList[index].Year}${CalendarList[index].Month}${CalendarList[index].Day}" title="${CalendarList[index].Year}/${CalendarList[index].Month}/${CalendarList[index].Day}" style="border:3px #cccccc solid; color:#D3D3D3;">
-                            ${CalendarList[index].Day}</td>`).hover(HoverTd));
+                        $(`#CalendarRow${i}`).append($(`<td id="${pid}" title="${ptitle}" class="p-0 relative" style="color:#D3D3D3;"></td>`).hover($(this).prop('title')).append(`<smail>${CalendarList[index].Day}</smail>`));
                     }
                     index++;
                 }
             }
+            $("#2019105").append($(`<div class="bg-primary text-light absolute" style="border:1px #cccccc solid;">text</div>`).on('click', ModifyActivity)).off("click");
         };
+        function prevButton() {
+            Today = new Date(_year, _month - 1);
+            _year = Today.getFullYear();
+            _month = Today.getMonth();
+            _day = Today.getDate();
+            MonthArray();
+            ToWeek();
+        }
+        function nextButton() {
+            Today = new Date(_year, _month + 1);
+            _year = Today.getFullYear();
+            _month = Today.getMonth();
+            _day = Today.getDate();
+            MonthArray();
+            ToWeek();
+        }
+        function AddActivity() {
+            let dat;
+            let dt = new Date();
+            console.log($(this).attr('title'));
+            if ($(this).attr('title') != undefined) {
+                dat = $(this).attr('title').split('/');
+                dt = new Date(dat[0], dat[1] - 1, dat[2]);
+            }
+            new DateSelector(selYear, selMonth, selDay, dt);
 
-        function HoverTd() {
-            $(this).prop('title');
+
+            $('#inputActivity').val('');
+            $('#delete').css('display', 'none');
+            $('#modify').css('display', 'none');
+            $('#send').css('display', 'block');
+            $('#ActivityModal').modal();
+        }
+        function ModifyActivity() {
+            let dat = $(this).parent().attr('title').split('/');
+            let dt = new Date(dat[0], dat[1] - 1, dat[2]);
+            new DateSelector(selYear, selMonth, selDay, dt);
+            console.log($(this).html());
+            $('#inputActivity').val($(this).html());
+            $('#delete').css('display', 'block');
+            $('#modify').css('display', 'block');
+            $('#send').css('display', 'none');
+            $('#ActivityModal').modal();
+        }
+        //讀取是否有localStorage
+        function LoadData() {
+            if (localStorage.getItem('reStorage') != null) {
+                let str = localStorage.getItem('reStorage');
+                Storage = JSON.parse(reStorage);
+            }
+        }
+        //存取至localStorage
+        function SaveData() {
+            let str = JSON.stringify(Storage);
+            localStorage.setItem('reStorage', str);
         }
     </script>
 </head>
@@ -79,6 +158,15 @@
         <div class="row">
             <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-dark text-light text-center">
                 <a class="btn bg-dark btn-lg float-left" role="button" aria-disabled="false" id="prev">&#10094;</a>
+                <a class="btn bg-dark btn-lg float-left" role="button" aria-disabled="false" id="Activity">
+                    <svg width="36" height="36" viewBox="0 0 36 36">
+                        <path fill="#ffffff" d="M16 16v14h4V20z"></path>
+                        <path fill="#ffffff" d="M30 16H20l-4 4h14z"></path>
+                        <path fill="#ffffff" d="M6 16v4h10l4-4z"></path>
+                        <path fill="#ffffff" d="M20 16V6h-4v14z"></path>
+                        <path fill="none" d="M0 0h36v36H0z"></path>
+                    </svg>
+                </a>
                 <span class="year h1" id="year">&emsp;</span>
                 <span class="month h1" id="month"></span>
                 <a class="btn bg-dark btn-lg float-right" role="button" aria-disabled="false" id="next">&#10095;</a>
@@ -100,6 +188,40 @@
             </table>
         </div>
     </div>
+    <div class="modal fade" id="ActivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-light">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                            <span>Create</span>
+                        </div>
+                    </div>
+                    <button class="btn float-right bg-dark text-light" type="button" class="close" data-dismiss="modal"
+                        aria-label="Close" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p>Date：
+                            Year<select id="selYear"></select>
+                            Month <select id="selMonth"></select>
+                            Date<select id="selDay"></select>
+                            Time <select id="Time"></select>
+                        </p>
+                        <p>Activity：<input type="text" name="Activity" id="inputActivity" class="form-control"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="send">Send</button>
+                        <button type="button" class="btn btn-danger" id="delete">Delete</button>
+                        <button type="button" class="btn btn-secondary" id="modify">Modify</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </body>
+<script type="text/javascript">
+</script>
 
 </html>
