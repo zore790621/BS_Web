@@ -18,49 +18,86 @@
     <style>
     </style>
     <script>
-        var StatDdy = new Date();
+        var Today = new Date();
+        var _year = Today.getFullYear();
+        var _month = Today.getMonth();
+        var _day = Today.getDate();
+        var PrevMonth = new Date(_year, _month, 0);
+        var NextMonth = new Date(_year, _month + 1, 1);
+        var CalendarList = [];
         $(function () {
-            console.log(StatDdy);
-            console.log(StatDdy.getDate());
-            console.log(StatDdy.getDate());
-            console.log(StatDdy.getDate());
+            MonthArray();
+            ToWeek();
         });
+        function MonthArray() {
+            let _str = Today.toString();
+            let reY = _str.substr(11, 4);
+            let reM = _str.substr(4, 3);
+            CalendarList = [];
+            $('#year').html(reY + "&emsp;");
+            $('#month').html(reM);
+            let PDay = new Date(_year, _month - 1, PrevMonth.getDate() - PrevMonth.getDay());
+            let NDay = new Date(_year, _month + 1, NextMonth.getDate() + (6 - NextMonth.getDay()));
+            for (let l = PDay; l <= NDay; l.setDate(l.getDate() + 1)) {
+                let NewDate = {
+                    'Year': l.getFullYear(),
+                    'Month': l.getMonth(),
+                    'Day': l.getDate(),
+                }
+                CalendarList.push(NewDate);
+            }
+        }
+        function ToWeek() {
+            let Week = CalendarList.length / 7;
+            let index = 0;
+            for (let i = 1; i < Week + 1; i++) {
+                $(".calendarWeek").append($(`<tr id="CalendarRow${i}"></tr>`));
+                for (let j = 0; j < 7; j++) {
+                    console.log(CalendarList[index]);
+                    if (CalendarList[index].Month == _month) {
+                        $(`#CalendarRow${i}`).append($(`
+                        <td id="${CalendarList[index].Year}${CalendarList[index].Month}${CalendarList[index].Day}" title="${CalendarList[index].Year}/${CalendarList[index].Month}/${CalendarList[index].Day}" style="border:3px #cccccc solid;">
+                            ${CalendarList[index].Day}</td>`).hover(HoverTd));
+                    } else {
+                        $(`#CalendarRow${i}`).append($(`
+                        <td id="${CalendarList[index].Year}${CalendarList[index].Month}${CalendarList[index].Day}" title="${CalendarList[index].Year}/${CalendarList[index].Month}/${CalendarList[index].Day}" style="border:3px #cccccc solid; color:#D3D3D3;">
+                            ${CalendarList[index].Day}</td>`).hover(HoverTd));
+                    }
+                    index++;
+                }
+            }
+        };
+
+        function HoverTd() {
+            $(this).prop('title');
+        }
     </script>
 </head>
 
 <body>
     <div class="calendar container">
         <div class="row">
-            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                <a class="page-link" href="#">Previous</a>
-                <a class="page-link" href="#">Next</a>
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-dark text-light text-center">
+                <a class="btn bg-dark btn-lg float-left" role="button" aria-disabled="false" id="prev">&#10094;</a>
+                <span class="year h1" id="year">&emsp;</span>
+                <span class="month h1" id="month"></span>
+                <a class="btn bg-dark btn-lg float-right" role="button" aria-disabled="false" id="next">&#10095;</a>
             </div>
-            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Sunday</th>
-                            <th scope="col">Monday</th>
-                            <th scope="col">Tuesday</th>
-                            <th scope="col">Wednesday</th>
-                            <th scope="col">Thursday</th>
-                            <th scope="col">Friday</th>
-                            <th scope="col">Saturday</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>Mark</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Sum</th>
+                        <th scope="col">Mon</th>
+                        <th scope="col">Tue</th>
+                        <th scope="col">Wed</th>
+                        <th scope="col">Thu</th>
+                        <th scope="col">Fri</th>
+                        <th scope="col">Sat</th>
+                    </tr>
+                </thead>
+                <tbody class="calendarWeek">
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
