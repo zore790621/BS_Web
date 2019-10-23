@@ -31,7 +31,7 @@
     </style>
     <script>
         var Storage = [];
-        
+
         var Today = new Date();
         var _year = Today.getFullYear();
         var _month = Today.getMonth();
@@ -46,14 +46,67 @@
             $('#prev').click(prevButton);
             $('#next').click(nextButton);
             $('#Activity').click(AddActivity);
-            $('#send').click();
-            $('#modify').click();
-            $('#delete').click();
+            $('#send').click(sendButton);
+            $('#modify').click(modifyButton);
+            $('#delete').click(deleteButton);
 
             for (let time = 0; time < 24; time++) {
                 $('#Time').append(`<option value="${time}">${time}</option>`)
             }
+            LoadData();
+            CreateThings();
         });
+        function sendButton() {
+            let id = _uuid();
+            let Sy = $('#selYear').val();
+            let Sm = $('#selMonth').val();
+            let Sd = $('#selDay').val();
+            let St = $('#Time').val();
+            let Sthing = $('#inputActivity').val();
+            let newS = {
+                'id': id,
+                'year': Sy,
+                'month': Sm,
+                'date': Sd,
+                'hour': St,
+                'things': Sthing
+            }
+            Storage.push(newS);
+            SaveData();
+            CreateThings();
+            $('#ActivityModal').modal('hide');
+        }
+        function modifyButton() {
+            let modifyindex = $.map(Storage, (x, y) => { return x.id }).indexOf(delid);
+            console.log(modifyindex);
+            let modifyS = {
+                'id': delid,
+                'year': $('#selYear').val(),
+                'month': $('#selMonth').val(),
+                'date': $('#selDay').val(),
+                'hour': $('#Time').val(),
+                'things': $('#inputActivity').val()
+            };
+            Storage[modifyindex] = modifyS;
+            console.log(Storage[modifyindex]);
+            console.log(Storage);
+            SaveData();
+            LoadData();
+            MonthArray();
+            ToWeek();
+            CreateThings();
+            $('#ActivityModal').modal('hide');
+        }
+        function deleteButton() {
+            let delindex = $.map(Storage, (x, y) => { return x.id }).indexOf(delid);
+            Storage.splice(delindex, 1);
+            SaveData();
+            LoadData();
+            MonthArray();
+            ToWeek();
+            CreateThings();
+            $('#ActivityModal').modal('hide');
+        }
         function MonthArray() {
             PrevMonth = new Date(_year, _month, 0);
             NextMonth = new Date(_year, _month + 1, 1);
@@ -92,8 +145,17 @@
                     index++;
                 }
             }
-            $("#2019105").append($(`<div class="bg-primary text-light absolute" style="border:1px #cccccc solid;">text</div>`).on('click', ModifyActivity)).off("click");
         };
+        function CreateThings() {
+            $("td div").remove();
+            Storage.forEach(x => {
+                $(`#${x.year}${x.month}${x.date}`)
+                    .append($(`<div id="${x.id}" class="bg-primary text-light absolute" ></div>`).on('click', ModifyActivity)
+                    ).off("click");
+                $(`#${x.id}`).append($(`<small class="mx-0">${x.hour}:00</small>`));
+                $(`#${x.id}`).append($(`<span>${x.things}</span>`));
+            });
+        }
         function prevButton() {
             Today = new Date(_year, _month - 1);
             _year = Today.getFullYear();
@@ -101,6 +163,7 @@
             _day = Today.getDate();
             MonthArray();
             ToWeek();
+            CreateThings();
         }
         function nextButton() {
             Today = new Date(_year, _month + 1);
@@ -109,6 +172,7 @@
             _day = Today.getDate();
             MonthArray();
             ToWeek();
+            CreateThings();
         }
         function AddActivity() {
             let dat;
@@ -120,7 +184,6 @@
             }
             new DateSelector(selYear, selMonth, selDay, dt);
 
-
             $('#inputActivity').val('');
             $('#delete').css('display', 'none');
             $('#modify').css('display', 'none');
@@ -131,24 +194,38 @@
             let dat = $(this).parent().attr('title').split('/');
             let dt = new Date(dat[0], dat[1] - 1, dat[2]);
             new DateSelector(selYear, selMonth, selDay, dt);
-            console.log($(this).html());
-            $('#inputActivity').val($(this).html());
+            // console.log($(this).html());
+
+            $('#inputActivity').val($(this).children("span").html());
             $('#delete').css('display', 'block');
             $('#modify').css('display', 'block');
             $('#send').css('display', 'none');
             $('#ActivityModal').modal();
+            delid = $(this).attr('id');
         }
         //讀取是否有localStorage
         function LoadData() {
+            // console.log(localStorage.getItem('reStorage'));
             if (localStorage.getItem('reStorage') != null) {
                 let str = localStorage.getItem('reStorage');
-                Storage = JSON.parse(reStorage);
+                Storage = JSON.parse(str);
             }
         }
         //存取至localStorage
         function SaveData() {
             let str = JSON.stringify(Storage);
             localStorage.setItem('reStorage', str);
+        }
+        function _uuid() {
+            let d = Date.now();
+            if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+                d += performance.now(); //use high-precision timer if available
+            }
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
         }
     </script>
 </head>

@@ -23,7 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.js"></script>
     <script>
         var dat = [
-            ['Eric', '0912345678', '1980/1/1', 'eric@gmail.com', '台北市光復南路179號13樓', []]
+            ['Eric', '0912345678', '1980/1/1', 'eric@gmail.com', '台北市光復南路179號13樓', ['a,g']]
         ];
 
         $(function () {
@@ -107,7 +107,6 @@
             $('#inputPhone').val(CurrentEditItem[2]);
             $('#inputEmail').val(CurrentEditItem[3]);
             $('#inputAddress').val(CurrentEditItem[4]);
-            $('#Tags').importTags(CurrentEditItem[5]);
         }
         //覆蓋匯入
         function inputTextButton() {
