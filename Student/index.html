@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Puzzle</title>
+
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <style>
+        #imagetable {
+            background-image: url('images/image.png');
+            width: 600px;
+            height: 600px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            line-height: 0;
+            position: relative;
+        }
+
+        #imagetable .tdclass {
+            border: 2px orangered solid;
+            background-image: url('images/image.png');
+            background-size: 600px;
+            transition-duration: 0.5s;
+        }
+
+        .tdempty {
+            background-image: none;
+            background-color: white;
+            transition-duration: 0.5s;
+            z-index: 50;
+        }
+    </style>
+
+    <script>
+        var startcheck = false;
+        var emptycheck = false;
+        var randomcheck = false;
+        var emptyid;
+        var tablenumber;
+        var box = [];
+        var left;
+        var top;
+
+        //----------------開始初始-----------------------
+
+        //重新
+        function reflesh() {
+            startcheck = false;
+            emptycheck = false;
+            randomcheck = false;
+            emptyid;
+            tablenumber;
+            box = [];
+            $('#btn_reset').attr("disabled", "true");
+            $('#btn_start').removeAttr("disabled");
+            $('#btn_random').removeAttr("disabled");
+        }
+        //初始
+        function initial() {
+            reflesh();
+            $('#tableselect').val(1);
+        }
+
+
+        //開始事件__隨機洗牌
+        function randomtable() {
+            var times = 100;
+            var step = [];
+            for (let t = 0; t < times; t++) {
+                changesides();
+            }
+            randomcheck = true;
+        }
+        //開始事件__隨機洗牌__單次
+        function changesides() {
+            emptyleft = $(`#${emptyid}`)[0].style.left;
+            emptytop = $(`#${emptyid}`)[0].style.top
+            var randomposition = [];
+            emptysides();
+            catchsideid();
+        }
+        //開始事件__隨機洗牌__隨機抓取空格周圍位置
+        function emptysides() {
+            emptyposition = [parseInt(emptyleft), parseInt(emptytop)];
+            var direction = Math.ceil(Math.random() * 4);
+            switch (direction) {
+                case 1:
+                    randomposition = [emptyposition[0], emptyposition[1] - (600 / tablenumber)]
+                    break;
+                case 2:
+                    randomposition = [emptyposition[0], emptyposition[1] + (600 / tablenumber)]
+                    break;
+                case 3:
+                    randomposition = [emptyposition[0] - (600 / tablenumber), emptyposition[1]]
+                    break;
+                case 4:
+                    randomposition = [emptyposition[0] + (600 / tablenumber), emptyposition[1]]
+                    break;
+            }
+
+        }
+        ////開始事件__隨機洗牌__位置互換
+        function catchsideid() {
+            for (let i = 1; i <= tablenumber * tablenumber; i++) {
+                if ($(`#${i}`)[0].style.left == randomposition[0] + 'px' && $(`#${i}`)[0].style.top == randomposition[1] + 'px') {
+                    $(`#${i}`)[0].style.left = emptyposition[0] + 'px';
+                    $(`#${i}`)[0].style.top = emptyposition[1] + 'px';
+                    $(`#${emptyid}`)[0].style.left = randomposition[0] + 'px';
+                    $(`#${emptyid}`)[0].style.top = randomposition[1] + 'px';
+                }
+            }
+        }
+
+        //----------------開始前設定動作-----------------------
+
+        //難度選擇事件__產生td
+        function createtable() {
+            $('#imagetable').empty();
+            var addtd = "";
+            var addtr;
+            var tdsize = (600 / tablenumber);
+            var k = 1;
+            for (j = 1; j <= tablenumber; j++) {
+                for (i = 1; i <= tablenumber; i++) {
+                    if (addtd != "") {
+                        addtd += `<div id ="${k}" class="text-white tdclass td" style="position: absolute; left: ${tdsize * (i - 1)}px; top: ${tdsize * (j - 1)}px; width:${(600 / tablenumber)}px; height:${(600 / tablenumber)}px; background-position: ${tdsize * (-i + 1)}px ${tdsize * (-j + 1)}px; display:inline-block;"></div>`
+                        k++;
+                    } else {
+                        addtd = `<div id ="${k}" class="text-white tdclass td" style="position: absolute; left: ${tdsize * (i - 1)}px; top: ${tdsize * (j - 1)}px; width:${(600 / tablenumber)}px; height:${(600 / tablenumber)}px; background-position: ${tdsize * (-i + 1)}px ${tdsize * (-j + 1)}px; display:inline-block;"></div>`
+                        k++;
+                    }
+                }
+                $('#imagetable').html($('#imagetable').html() + addtd);
+                addtd = "";
+            }
+            createbox();
+            $('#imagetable').css('background-image', 'none');
+            alert("請選擇空格位置");
+            clickEmptyAndMove();
+        }
+
+        //遊戲開始事件
+        function start() {
+            checkstart();
+            clickEmptyAndMove();
+        }
+
+        //----------------開始後動作-----------------------
+        //檢查遊戲開始
+        function checkstart() {
+            checklevelselect();
+            if (emptycheck && randomcheck && (tablenumber != 1)) {
+                startcheck = true;
+                $('#btn_start').attr("disabled", "true");
+                $('#btn_random').attr("disabled", "true");
+                $('#btn_reset').removeAttr("disabled");
+            }
+        }
+        //檢查遊戲開始___檢查遊戲難度
+        function checklevelselect() {
+            let select = $('#tableselect').val();
+            if (select == 0) {
+                alert("請選擇難度");
+            } else {
+                checkemptyselect();
+            }
+        }
+        //檢查遊戲開始___檢查點擊空格td
+        function checkemptyselect() {
+            if (emptycheck == false) {
+                alert("請點擊空位置");
+            } else {
+                checkrandom();
+            }
+        }
+        //檢查遊戲開始___檢查洗牌
+        function checkrandom() {
+            if (randomcheck == false) {
+                alert("請洗牌");
+            } else {
+                randomcheck = true;
+            }
+        }
+
+        //取ID與其圖片position放入array
+        function createbox() {
+            var td = $('.td')
+            for (i = 0; i < td.length; i++) {
+                var item = [td[i].id, td[i].style.left, td[i].style.top];
+                box.push(item);
+            }
+        }
+
+        //點擊空格td(僅一次)&開始後點擊移動
+        function clickEmptyAndMove() {
+            $('.td').click(function () {
+                if (emptycheck == false) {
+                    $(this).css('background-image', 'none');
+                    $(this).css('background-color', 'white');
+                    emptycheck = true;
+                    emptyid = $(this).attr("id");
+                } else if (emptycheck == true) {
+                    if (startcheck == true) {
+                        movetransition($(this));
+                    } else {
+                        if (randomcheck == true) {
+                            alert("請按開始");
+                        } else {
+                            alert("請按洗牌");
+                        }
+                    }
+                }
+            });
+        }
+
+        //點擊移動
+        function movetransition(item) {
+            var itemid = item.attr("id");
+            var itemposition = [];
+            xposition = Math.abs(parseInt($(`#${emptyid}`).css('left')) - parseInt(item.css('left')));
+            yposition = Math.abs(parseInt($(`#${emptyid}`).css('top')) - parseInt(item.css('top')));
+            sidevalue = (600 / tablenumber);
+            if ((xposition == sidevalue && yposition == 0) || (xposition == 0 && yposition == sidevalue)) {
+                itemposition = [item.css('left'), item.css('top')];
+                item.css('left', $(`#${emptyid}`).css('left'));
+                item.css('top', $(`#${emptyid}`).css('top'));
+                $(`#${emptyid}`).css('left', itemposition[0]);
+                $(`#${emptyid}`).css('top', itemposition[1]);
+            }
+            checkdone();
+        }
+
+        //完成判定
+        function checkdone() {
+            var done = 0;
+            for (i = 0; i < tablenumber * tablenumber; i++) {
+                if ($(`#${i + 1}`)[0].style.left == box[i][1] && $(`#${i + 1}`)[0].style.top == box[i][2]) {
+                    done++
+                } else {
+                    break;
+                }
+            }
+            if (done == tablenumber * tablenumber) {
+                console.log("恭喜完成");
+            }
+        }
+
+        $(function () {
+            initial();
+
+            //難度選擇事件
+            $('#tableselect').change(function () {
+                reflesh();
+                tablenumber = $('#tableselect').val();
+                createtable();
+            });
+
+            //洗牌事件
+            $('#btn_random').click(function () {
+                randomtable();
+            });
+
+            //開始事件
+            $('#btn_start').click(function () {
+                start();
+            });
+
+            //重新事件
+            $('#btn_reset').click(function () {
+                initial();
+            });
+
+            // //選圖事件
+            // $('#btn_setimg').click(function () {
+            //     checkdone();
+            // });
+        });
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="m-3">
+                    <div id="imagetable" style="position: relative;">
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="m-3">
+                    <select id="tableselect" class="custom-select custom-select-lg">
+                        <option selected value="1">選擇難度</option>
+                        <option value="2">簡單</option>
+                        <option value="3">基本</option>
+                        <option value="4">困難</option>
+                        <option value="5">挑戰</option>
+                    </select>
+                </div>
+                <!-- <div class="m-3">
+                    <button class="btn btn-primary" id="btn_setimg">選擇圖片</button>
+                </div> -->
+                <div class="m-3">
+                    <button class="btn btn-primary" id="btn_random">洗牌</button>
+                </div>
+                <div class="m-3">
+                    <button class="btn btn-primary" id="btn_start">開始</button>
+                </div>
+                <div class="m-3">
+                    <button class="btn btn-primary" id="btn_reset">放棄重來</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
