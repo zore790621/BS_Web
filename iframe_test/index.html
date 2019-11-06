@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hart-TW">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(() => {
+            $('#refreshFrame').click(function () {
+                $('#myframe').attr('src', 'https://api.jquery.com/');
+            });
+        });
+
+        // function refreshFrame(){
+        //     document.getElementById('myframe').contentWindow.location.reload(true);
+        // }
+    </script>
+    <script>
+
+        $(function () {
+            $.get("../puzzle/index.html", function (data) {
+                $("#iframeContent").html(data);//初始化加载界面
+            });
+
+            $('#indexMenu li').click(function () {//点击li加载界面
+                var current = $(this),
+                    target = current.find('a').attr('target'); // 找到链接a中的targer的值
+                $.get(target, function (data) {
+                    $("#iframeContent").html(data);
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <button class="navbar-toggler" data-target="#indexMenu" data-toggle="collapse" aria-controls="indexMenu"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="indexMenu" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" target="../datatable/index.html">html2</a></li>
+                <li class="nav-item"><a class="nav-link" target="../jquery_lab_1/index.html">html3</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="iframeContent" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div>
+        </div>
+    </div>
+</body>
+
+</html>
