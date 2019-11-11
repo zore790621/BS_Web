@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--jquery引用-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--jquery table的css引用-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <!--jquery table的js引用-->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <title>Image Puzzle</title>
+    <style>
+        .contain {
+            height: 480px;
+            width: 480px;
+            border: crimson 3px solid;
+            padding: 0px;
+        }
+
+        .pic {
+
+            border: solid 1px gray;
+            float: left;
+            overflow: hidden;
+        }
+    </style>
+
+    <script>
+        var divInd = [];
+        var level = 3;
+        $(function () {
+            DivMaker();
+            startClick();
+            divClick();
+        })
+
+        function divClick() {
+            $(`#contain>div`).click(function (e) {
+                i = $("#contain>div").index($(this));
+                // console.log(i);
+                CheckBlank(i);
+            });
+        }
+        function startClick() {
+            $(`#gamestart`).click(function (e) {
+                level = parseInt(document.getElementById('inputLevel').value);
+                DivMaker();
+                Shuffle();
+            });
+        }
+
+        //劃出div,顯示九張
+        function DivMaker() {
+            $("#contain").html("");
+            for (i = 0; i < (level * level); i++) {
+                $("#contain").append(`<div class='pic' id='pic${i}' style="width: ${480 / level - 2}px;
+            height: ${480 / level - 2}px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-zXnybWvBTf1VYfc-0OdugbFflaujiW9mtxsGDeNCdicSeffo"></div>`);
+                $(`#pic${i} img`).css({ 
+                    'margin-left': `${(i % level) * (-480 / level)}px`, 
+                    'margin-top': `${(Math.floor(i / level)) * (-480 / level)}px` });
+                //物件陣列塞位置
+
+                divInd[i] = { col: i % level, row: Math.floor(i / level), style: $(`#pic${i} img`).attr("style") };
+            }
+            //移除一張
+
+            $("#pic0 img").remove();
+            divClick();
+        }
+
+        //上傳圖片
+        //圖片上下左右元素是哪幾個
+
+        function BesideMe(i) {
+            col = divInd[i].col;
+            row = divInd[i].row;
+            besideDiv = [];
+            //上
+            if (row > 0) {
+                besideDiv.push(i - level);
+            }
+            //下
+            if (row < level - 1) {
+                besideDiv.push(i + level);
+            }
+            //左
+            if (col > 0) {
+                besideDiv.push(i - 1);
+            }
+            //右
+            if (col < level - 1) {
+                besideDiv.push(i + 1);
+            }
+        }
+        //附近的元素是否有空白
+        function CheckBlank(i) {
+            BesideMe(i);
+            for (q = 0; q < besideDiv.length; q++) {
+                let temp = besideDiv[q];
+                if ($(`#pic${temp}`).children().length == 0) {
+                    ChangePosition(q, i);
+                    break;
+                }
+            }
+        }
+        //換位置
+        function ChangePosition(q, i) {
+            let temp = besideDiv[q];//空白的index
+            $(`#pic${temp}`).append(`<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-zXnybWvBTf1VYfc-0OdugbFflaujiW9mtxsGDeNCdicSeffo">`);
+            //$(`#img${i}`).after($(`#img${temp}`));
+            let tempCSS = $(`#pic${i} img`).attr("style");
+            //let tempID = $(`#pic${i} img`).attr("style");
+            $(`#pic${temp} img`).attr("style", tempCSS);
+            $(`#pic${i} img`).remove();
+            CheckVictory();
+        }
+        //檢查勝利
+        function CheckVictory() {
+            let temp = 0;
+            for (i = 0; i < (level * level); i++) {
+                if ($(`#pic${i} img`).attr("style") == divInd[i].style) {
+                    temp += 1;
+                }
+            }
+            if (temp == (level * level - 1)) { alert("win"); }
+        }
+
+        //洗牌
+        function Shuffle() {
+            /* answer = []; 
+              while (answer.length < (level * level)) {
+                  var number = Math.floor(Math.random() * (level * level));
+                  if (answer.indexOf(number) == -1) {
+                      let tempA = $(`#pic${answer[number - 1]} img`).attr("style");
+                      $(`#pic${answer[number - 1]} img`).attr("style", $(`#pic${answer[number]} img`).attr("style"));
+                      $(`#pic${answer[number]} img`).attr("style", tempA);
+                      answer.push( number);
+                  }
+              }
+              */
+            
+            // console.log("level是"+level);
+            for (let j = 0; j < 500; j++) {
+                let random = Math.floor(Math.random() * (level * level + 1));
+                console.log(random);
+                $(`#pic${random}`).click();
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="row">
+        <div id="contain" class="contain">
+
+        </div>
+    </div>
+    <div class="col-4 col-xs-4 col-sm-4 col-md-4 col-lg-4 text-center">
+        <span class="label my-2">等級</span>
+        <select name="Level" id="inputLevel" class="form-control  my-2">
+            <option value="3" selected>簡單 3x3</option>
+            <option value="4">中等 4x4</option>
+            <option value="5">困難 5x5</option>
+        </select>
+        <input name="gamestart" id="gamestart" class="btn btn-primary  my-2" type="button" value="開始">
+    </div>
+
+
+</body>
+
+</html>
