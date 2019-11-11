@@ -78,7 +78,7 @@
         }
         function modifyButton() {
             let modifyindex = $.map(Storage, (x, y) => { return x.id }).indexOf(delid);
-            console.log(modifyindex);
+            // console.log(modifyindex);
             let modifyS = {
                 'id': delid,
                 'year': $('#selYear').val(),
@@ -88,8 +88,8 @@
                 'things': $('#inputActivity').val()
             };
             Storage[modifyindex] = modifyS;
-            console.log(Storage[modifyindex]);
-            console.log(Storage);
+            // console.log(Storage[modifyindex]);
+            // console.log(Storage);
             SaveData();
             LoadData();
             MonthArray();
@@ -127,6 +127,7 @@
                 CalendarList.push(NewDate);
             }
         }
+        
         function ToWeek() {
             let Week = CalendarList.length / 7;
             let index = 0;
@@ -177,7 +178,7 @@
         function AddActivity() {
             let dat;
             let dt = new Date();
-            console.log($(this).attr('title'));
+            // console.log($(this).attr('title'));
             if ($(this).attr('title') != undefined) {
                 dat = $(this).attr('title').split('/');
                 dt = new Date(dat[0], dat[1] - 1, dat[2]);
@@ -240,9 +241,9 @@
 </head>
 
 <body>
-    <div class="calendar container">
+    <div class="calendar container-fluid">
         <div class="row">
-            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-dark text-light text-center">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 bg-dark text-light text-center ">
                 <a class="btn bg-dark btn-lg float-left" role="button" aria-disabled="false" id="prev">&#10094;</a>
                 <a class="btn bg-dark btn-lg float-left" role="button" aria-disabled="false" id="Activity">
                     <svg width="36" height="36" viewBox="0 0 36 36">

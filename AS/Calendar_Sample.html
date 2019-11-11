@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            font-family: Microsoft JhengHei;
+        }
+
+        #month-area {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            line-height: 80px;
+        }
+
+        #month-area>a {
+            text-align: center;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        #month-area>a:hover {
+            cursor: pointer;
+        }
+
+        #month {
+            font-size: 40px;
+        }
+
+        #calendar {
+            height: 80%;
+            width: 100%;
+        }
+
+        .date {
+            font-size: 1.3em;
+            width: 14.28%;
+            height: 20%;
+        }
+
+        .date>ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .date>div {
+            width: 120px;
+            color: black;
+            height: 18px;
+            font-size: 10px;
+            border-left: 5px solid #61A8DC;
+        }
+
+        .date>div>a {
+            margin-left: 5px;
+        }
+
+        .other {
+            color: gray;
+        }
+
+        .saturday {
+            color: green;
+        }
+
+        .sunday {
+            color: red;
+        }
+
+        .fillet input {
+            border-radius: solid 1px #ccc;
+        }
+
+        .add {
+            position: absolute;
+            border-radius: 20px;
+        }
+
+        .form-control {
+            display: inline;
+            max-width: 50%;
+        }
+
+        .calendar-content>tr {
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="month-area">
+        <a id="last-month">＜</a>
+        <a id="month"></a>
+        <a id="next-month">＞</a>
+    </div>
+
+
+    <table id="calendar" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    <p class="text-center">日</p>
+                </th>
+                <th>
+                    <p class="text-center">一</p>
+                </th>
+                <th>
+                    <p class="text-center">二</p>
+                </th>
+                <th>
+                    <p class="text-center">三</p>
+                </th>
+                <th>
+                    <p class="text-center">四</p>
+                </th>
+                <th>
+                    <p class="text-center">五</p>
+                </th>
+                <th>
+                    <p class="text-center">六</p>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="calendar-content">
+        </tbody>
+    </table>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+
+    <script>
+        var Calendar = [];
+        var d = new Date();
+        var _year = d.getFullYear();
+        var _month = d.getMonth();
+        var _date = d.getDate();
+        var _week = d.getDay();
+
+        $(function () {
+            DisplayCalendar();
+            $('#next-month').on('click', function () {
+                console.log('give next-month click');
+                if (_month < 11) {
+                    _month += 1;
+                } else {
+                    _month = 0;
+                    _year += 1;
+                }
+                DisplayCalendar();
+            });
+
+            $('#last-month').on('click', function () {
+                console.log('give last-month click');
+                if (_month > 1) {
+                    _month -= 1;
+                } else {
+                    _month = 11;
+                    _year -= 1;
+                }
+                DisplayCalendar();
+            });
+
+        })
+
+        function DisplayCalendar() {
+
+            //先將顯示畫面的清空 , 呈現資料的陣列清空
+            $('#calendar-content').empty();
+            Calendar = [];
+            //顯示月份
+            $('#month').text(GetMonthName(_month));
+
+            var firstDay = new Date(_year, _month, 1);
+            var lastDay = new Date(_year, _month + 1, 0);
+            var lastDateOfLastMonth = new Date(_year, _month, 0);
+
+            //取得上個月日期(上月要顯示幾天 , 上個月最後一天)
+            GetLastMonthDate(firstDay.getDay() - 1, lastDateOfLastMonth); //想一下firstDay.getDay()為甚麼要減一
+
+            //顯示本月幾天　傳入(第一天，最後一天)
+            GetCurrentMonthDate(firstDay, lastDay);
+
+            //顯示下個月日期
+            GetNextMonthDate(lastDay);
+            console.log('Calendar is ', Calendar);
+
+            console.log('Do DisplayCalendar');
+
+            var rows_count = Calendar.length / 7;
+            //產生tr
+            for (var i = 0; i < rows_count; i++) {
+                $('#calendar-content').append($('<tr>').addClass('week' + i));
+            }
+
+            //產生td 在tr裡面
+            for (var i = 0; i < Calendar.length; i++) {
+                var week = parseInt(i / 7);
+                var target = $('#calendar-content').find('.week' + week);
+                target.append($('<td>').text(Calendar[i].date).addClass('date' + i));
+            }
+        }
+
+        function GetLastMonthDate(lastMonthDateRange, lastDateOfLastMonth) {
+            var displaydate = lastDateOfLastMonth.getDate() - lastMonthDateRange;
+            var displayWeek = lastDateOfLastMonth.getDay() - lastMonthDateRange;
+            //依照順序顯示上個月日期
+            for (var i = 0; i <= lastMonthDateRange; i++) {
+
+                var singleItem = {
+                    "month": lastDateOfLastMonth.getMonth(),
+                    "date": displaydate,
+                    "week": displayWeek
+                }
+                displaydate++;
+                displayWeek++;
+                Calendar.push(singleItem);
+            }
+        }
+
+        function GetCurrentMonthDate(firstDay, lastDay) {
+            var start = firstDay.getDate();
+            var end = lastDay.getDate();
+            for (var i = start; i <= end; i++) {
+                var today_week = new Date(_year, _month, i);
+                var singleItem = {
+                    "month": today_week.getMonth(),
+                    "date": i,
+                    "week": today_week.getDay()
+                }
+                Calendar.push(singleItem);
+            }
+        }
+
+        function GetNextMonthDate(lastDayOfThisMonth) {
+            var lastDateOfthisMonth_week = lastDayOfThisMonth.getDay();
+            var nextMonthFirstDate = new Date(_year, _month + 1, 1); //取得下個月第一天
+            for (var i = 0; i < 6 - lastDateOfthisMonth_week; i++) {
+                var singleItem = {
+                    "month": nextMonthFirstDate.getMonth(),
+                    "date": nextMonthFirstDate.getDate() + i,
+                    "week": nextMonthFirstDate.getDay() + i
+                }
+
+                Calendar.push(singleItem);
+            }
+        }
+
+        //取得月份名稱
+        function GetMonthName(_month) {
+            var MonthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'Novenber', 'December'
+            ];
+            return MonthArray[_month];
+        }
+    </script>
+
+</body>
+
+</html>

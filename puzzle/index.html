@@ -37,9 +37,9 @@
         var Level = 3;
         var temppos = [];
         var saveLost;
+        var puzzlechick;
         $(function () {
             RePuzzle(Level);
-
             $('#inputLevel').change(function (e) {
                 Level = $('#inputLevel').val();
                 RePuzzle(Level);
@@ -84,7 +84,9 @@
                     }
                 }
             }
-            checkwin();
+            if (puzzlechick) {
+                checkwin();
+            }
         }
         function getNearPos(i, lv) {
             let pool = [];
@@ -102,20 +104,22 @@
             return pool;
         }
         function PuzzleButton() {
+            puzzlechick = false;
             for (let i = 0; i < 500; i++) {
                 let cells = $("#dvPuzzle div");
                 let toMove = getNearPos(cells.index($(`#Pic${Level * Level - 1}`)[0]), Level);
                 cells.eq(toMove[parseInt(Math.random() * toMove.length)]).click();
             }
+            puzzlechick = true;
         }
         function checkwin() {
             let check = [];
             for (let i = 0; i < $('.PicCell').length; i++) {
                 check.push($('.PicCell')[i]['id']);
             }
-            console.log(check.toString());
-            console.log(temppos.toString());
-            
+            // console.log(check.toString());
+            // console.log(temppos.toString());
+
             if (check.toString() == temppos.toString()) {
                 $('#modal').modal();
                 $(".PicCell").off("click");
