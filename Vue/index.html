@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-Hart">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- First -->
+    <div class="container">
+        <div class="row">
+            <div id="需載入資料的div塊" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <label class="label">{{顯示欄位}}</label>
+                <label class="label">{{顯示物件.物件一}}</label>
+                <label class="label">{{顯示物件.物件二[0]}}</label>
+                <label class="label">{{顯示物件.物件二[1]}}</label>
+            </div>
+        </div>
+    </div>
+    <!-- Sec -->
+    <div class="container">
+        <div class="row">
+            <div id="time" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                <label class="label">{{time}}</label>
+            </div>
+        </div>
+    </div>
+    <!-- v-model -->
+    <div class="container">
+        <div class="row">
+            <div id="vmodel">
+                <input type="text" v-model="message"></input>
+                <div>${ message }</div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <!-- First -->
+    <script>
+        var data = {
+            顯示欄位: "需顯示內容",
+            顯示物件: {
+                物件一: "測試物件一",
+                物件二: ["測試陣列一", "測試陣列二"]
+            }
+        };
+        function bind() {
+            new Vue({
+                el: "#需載入資料的div塊",
+                data: data
+            })
+        }
+
+        $(function () {
+            bind();
+        });
+    </script>
+    <!-- Sec -->
+    <script>
+        var clock = {
+            time: ""
+        }
+        function loadtime() {
+            new Vue({
+                el: "#time",
+                data: clock
+            })
+        }
+        
+        function time() {
+            clock.time = new Date();
+            setTimeout(time, 1000);
+        }
+        $(function () {
+            loadtime();
+            time();
+        });
+    </script>
+    <!-- v-model -->
+    <script>
+        $(function () {
+            var vm = new Vue({
+                el: '#vmodel',
+                delimiters: ['${', '}'],
+                data: {
+                    message: ''
+                }
+            });
+
+            var Component = Vue.extend({
+                data: function () {
+                    return {
+                        msg: ''
+                    }
+                }
+            });
+            vm.$data.message === vm.message; // true
+        });
+    </script>
+</body>
+
+</html>

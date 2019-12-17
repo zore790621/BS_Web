@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <!-- person -->
+    <div class="container ">
+        <div class="row">
+            <div id="person" class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <h5 class="card-title">資料編號:<label>{{ID}}</label></h5>
+                            <label>職稱:</label>
+                            <input class="form-control" v-model="title">
+                            <label>姓名:</label>
+                            <input class="form-control" v-model="name">
+                            <label>Phone:</label>
+                            <input class="form-control" v-model="Phone">
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <img width="200px" height="200px" v-bind:src="PictureURL">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Address:</label>
+                            <input class="form-control" v-model="Address">
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Memo:</label>
+                            <textarea class="form-control" v-model="Memo" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button id="GetJson1" class="btn btn-primary" type="button">Get Json</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- personforeach -->
+    <div class="container">
+        <div id="personforeach" class="row">
+            <div v-for="item in items" class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <h5 class="card-title">資料編號:<label>{{item.ID}}</label></h5>
+                            <label>職稱:</label>
+                            <input class="form-control" v-model="item.title">
+                            <label>姓名:</label>
+                            <input class="form-control" v-model="item.name">
+                            <label>Phone:</label>
+                            <input class="form-control" v-model="item.Phone">
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <img width="200px" height="200px" v-bind:src="item.PictureURL">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Address:</label>
+                            <input class="form-control" v-model="item.Address">
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Memo:</label>
+                            <textarea class="form-control" v-model="item.Memo" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bar -->
+    <div class="container" id="block1">
+        <div class="row">
+            <div class="col-12">
+                <div v-for="item in dat">
+                    <label>{{item}}</label>
+                    <div :style="{width: item*10+'px'}" style="background: greenyellow; height: 20px;"></div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prev Next -->
+    <div class="container">
+        <div id="personPN" class="row">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <h5 class="card-title">資料編號:<label>{{item.ID}}</label></h5>
+                            <label>職稱:</label>
+                            <input class="form-control" v-model="item.title">
+                            <label>姓名:</label>
+                            <input class="form-control" v-model="item.name">
+                            <label>Phone:</label>
+                            <input class="form-control" v-model="item.Phone">
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <img width="200px" height="200px" v-bind:src="item.PictureURL">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Address:</label>
+                            <input class="form-control" v-model="item.Address">
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label>Memo:</label>
+                            <textarea class="form-control" v-model="item.Memo" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button id="Prev" class="btn btn-primary" type="button">Prev</button>
+                    <button id="GetJson2" class="btn btn-primary" type="button">Get Json</button>
+                    <button id="Next" class="btn btn-primary" type="button">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <!-- person -->
+    <script>
+        var vm1;
+        var jsonperson = {
+            "ID": 3,
+            "title": "總裁",
+            "name": "Eric",
+            "PictureURL": "https://i.imgur.com/uxvy97n.png",
+            "Phone": "0912345678",
+            "Address": "新竹市大同區二三五路四號六樓",
+            "Memo": "澳洲來的人",
+            "isValid": true
+        }
+
+        function bind1() {
+            vm1 = new Vue({
+                el: "#person",
+                data: jsonperson
+            })
+        }
+        $().ready(() => {
+            bind1();
+            $('#GetJson1').click(() => {
+                alert(JSON.stringify(jsonperson));
+            });
+        });
+    </script>
+
+    <!-- personforeach -->
+    <script>
+        var jsonpersonfor = {
+            items: [{
+                "ID": 3,
+                "title": "總裁",
+                "name": "Eric",
+                "PictureURL": "https://i.imgur.com/uxvy97n.png",
+                "Phone": "0912345678",
+                "Address": "新竹市大同區二三五路四號六樓",
+                "Memo": "澳洲來的人",
+                "isValid": true
+            }, {
+                "ID": 4,
+                "title": "總裁二",
+                "name": "Eric",
+                "PictureURL": "https://i.imgur.com/uxvy97n.png",
+                "Phone": "0912345678",
+                "Address": "新竹市大同區二三五路四號六樓",
+                "Memo": "美國來的人",
+                "isValid": true
+            }, {
+                "ID": 5,
+                "title": "總裁三",
+                "name": "Eric",
+                "PictureURL": "https://i.imgur.com/uxvy97n.png",
+                "Phone": "0912345678",
+                "Address": "新竹市大同區二三五路四號六樓",
+                "Memo": "日本來的人",
+                "isValid": true
+            }]
+        }
+        function bind2() {
+            new Vue({
+                el: "#personforeach",
+                data: jsonpersonfor
+            })
+        }
+        $().ready(() => {
+            bind2();
+            $('Prev').click(() => {
+            });
+            $('#GetJson2').click(() => {
+                alert(JSON.stringify(jsonpersonfor));
+            });
+        });
+    </script>
+
+    <!-- Bar -->
+    <script>
+        var dat = [1, 3, 6, 2, 6, 23, 61, 25, 7];
+        function Binding() {
+            new Vue(
+                {
+                    el: '#block1',
+                    data: dat
+                }
+            );
+        }
+
+        $().ready(() => {
+            Binding();
+        });
+    </script>
+
+    <!-- Prev Next -->
+    <script>
+        var vm4;
+        var jsonPN = {
+            items: [
+                {
+                    ID: 3,
+                    title: "總裁", name: "Eric", PictureURL: "https://i.imgur.com/uxvy97n.png", Phone: "0912345678",
+                    Address: "新竹市大同區二三五路四號六樓",
+                    Memo: "澳洲來的人", isValid: true
+                },
+                {
+                    ID: 4,
+                    title: "瑪農", name: "David", PictureURL: "https://i.imgur.com/qsQcoGh.png", Phone: "0987654321",
+                    Address: "台北市信義區忠孝東路231號3樓",
+                    Memo: "充滿活力的廉價勞工", isValid: true
+                },
+                {
+                    ID: 5,
+                    title: "Boss", name: "Amy", PictureURL: "https://i.imgur.com/dfww1JX.png", Phone: "0912121121",
+                    Address: "高雄市仁義區六六路3號23樓",
+                    Memo: "小資女", isValid: true
+                }
+            ]
+        }
+        function bind3() {
+            vm4 = new Vue({
+                el: "#personPN",
+                data: { item: jsonPN.items[0] }
+            })
+        }
+        var i = 0;
+        var len = jsonPN.items.length - 1;
+        $().ready(() => {
+            bind3();
+            $('#Prev').click(() => {
+                i == 0 ? i = len : i--;
+                vm4.$data.item = jsonPN.items[i];
+            });
+            $('#GetJson2').click(() => {
+                alert(JSON.stringify(vm4.$data));
+            });
+            $('#Next').click(() => {
+                i == len ? i = 0 : i++;
+                vm4.$data.item = jsonPN.items[i];
+            });
+        });
+    </script>
+
+</body>
+
+</html>
