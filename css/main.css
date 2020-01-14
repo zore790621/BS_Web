@@ -1,0 +1,96 @@
+body {
+    font-size: 17px;
+    font-family: "Microsoft YaHei";
+    color: #3D3D3D;
+    /* font-family: "Verdana", "sans-serif"; */
+}
+
+li>a>img {
+    width: 220px;
+    height: 165px;
+}
+
+.skills {
+    padding: 0px 0px 30px 300px;
+    background-color: rgba(120, 217, 236, 0.233);
+}
+
+
+section {
+    background-color: #F8F7F5;
+}
+
+
+
+#BtnHover {
+    border-radius: 25px 50px;
+    box-shadow: 0 0 50px;
+    background-color: black;
+    color: white;
+}
+
+#BtnHover:hover {
+    box-shadow: 0 0 50px;
+    background-color: white;
+    color: black;
+}
+
+/* */
+
+.da-thumbs {
+    list-style: none;
+    position: relative;
+    margin: 20px auto;
+    padding: 50px;
+    background-color: #F8F7F5;
+}
+
+.da-thumbs li {
+    float: left;
+    margin: 5px;
+    background: #fff;
+    padding: 8px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.da-thumbs li a, .da-thumbs li a img {
+    display: block;
+    position: relative;
+}
+
+.da-thumbs li a {
+    overflow: hidden;
+}
+
+.da-thumbs li a div {
+    position: absolute;
+    background: #333;
+    background: rgba(75, 75, 75, 0.7);
+    width: 100%;
+    height: 100%;
+}
+
+.da-thumbs li a div span {
+    display: block;
+    padding: 10px 0;
+    margin: 40px 20px 20px 20px;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 -10px 0 rgba(255, 255, 255, 0.3);
+}
+
+
+.footer>a {
+    font-size: 50px;
+    margin: 0 20px;
+    color: #3D3D3D;
+    text-decoration: none;
+}
+
+.footer>a:hover {
+    color: #D07C7C;
+}
